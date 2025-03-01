@@ -20,14 +20,17 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 const Book = sequelize.define('product', {
     product_ID: {
         type: Sequelize.STRING,
-        allowNull: false,
         primaryKey: true,
     },
     name: {
         type: Sequelize.STRING,
         allowNull: false,
     },
-    categoryID: {
+    brand: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
+    category_ID: {
         type: Sequelize.STRING,
         allowNull: false,
     },
@@ -39,11 +42,7 @@ const Book = sequelize.define('product', {
         type: Sequelize.INTEGER,
         allowNull: false,
     },
-    brand: {
-        type: Sequelize.STRING,
-        allowNull: false,
-    },
-    suplierID: {
+    suplier_ID: {
         type: Sequelize.STRING,
         allowNull: false,
     },
