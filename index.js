@@ -219,7 +219,7 @@ app.delete("/products/:id", (req, res) => {
         if (!productId) 
             res.status(404).send();
         else
-            book.destroy().then(() => {
+            productId.destroy().then(() => {
                 res.json(book);
             })
             .catch((err) => {
@@ -227,9 +227,10 @@ app.delete("/products/:id", (req, res) => {
             });
     })
     .catch((err) => {
-      res.status(500).send(err);
+        res.status(500).send(err);
     });
 });
+
 
 require("dotenv").config();
 const port = process.env.PORT || 3000;
