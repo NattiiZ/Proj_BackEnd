@@ -197,20 +197,17 @@ app.post("/addProduct", (req, res) => {
     });
 });
 
-// route to update a book
-app.put("/books/:id", (req, res) => {
-  Book.findByPk(req.params.id)
-    .then((book) => {
-      if (!book) res.status(404).send();
-      else
-        book
-          .update(req.body)
-          .then((book) => {
-            res.json(book);
-          })
-          .catch((err) => {
-            res.status(500).send(err);
-          });
+app.put("/products/:id", (req, res) => {
+    Products.findByPk(req.params.id).then((productId) => {
+        if (!productId) 
+            res.status(404).send();
+        else
+            productId.update(req.body).then((productId) => {
+                res.json(book);
+            })
+            .catch((err) => {
+                res.status(500).send(err);
+            });
     })
     .catch((err) => {
       res.status(500).send(err);
