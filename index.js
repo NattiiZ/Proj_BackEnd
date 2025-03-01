@@ -1,3 +1,7 @@
+// ===================================================
+// --------------- Required Libraries ---------------
+// ===================================================
+
 const express = require("express");
 const app = express();
 const Sequelize = require("sequelize");
@@ -5,11 +9,20 @@ const Sequelize = require("sequelize");
 app.use(express.json());
 
 
+// ===================================================
+// --------------- Database Connection ---------------
+// ===================================================
+
+// ================= Define Database =================
+
 const sequelize = new Sequelize("database", "username", "password", {
   host: "localhost",
   dialect: "sqlite",
   storage: "./Database/Store.sqlite",
 });
+
+
+// ================= Customers Table =================
 
 const Customers = sequelize.define("Customers", {
   customer_ID: {
@@ -35,9 +48,16 @@ const Customers = sequelize.define("Customers", {
   },
   joinDate: {
     type: Sequelize.DATE,
+    defaultValue: Sequelize.NOW,
+    get() {
+      return new Date(this.getDataValue('joinDate')).toLocaleString("th-TH", { timeZone: "Asia/Bangkok" });
+    },
     allowNull: false,
   },
 });
+
+
+// ================= Orders Table =================
 
 const Orders = sequelize.define("Orders", {
   order_ID: {
@@ -51,6 +71,10 @@ const Orders = sequelize.define("Orders", {
   },
   orderDate: {
     type: Sequelize.DATE,
+    defaultValue: Sequelize.NOW,
+    get() {
+      return new Date(this.getDataValue('joinDate')).toLocaleString("th-TH", { timeZone: "Asia/Bangkok" });
+    },
     allowNull: false,
   },
   totalAmount: {
@@ -62,6 +86,9 @@ const Orders = sequelize.define("Orders", {
     allowNull: false,
   },
 });
+
+
+// ============== OrdersDetail Table ==============
 
 const OrderDetail = sequelize.define("OrderDetail", {
   orderDetail_ID: {
@@ -90,6 +117,9 @@ const OrderDetail = sequelize.define("OrderDetail", {
     allowNull: false,
   },
 });
+
+
+// ================= Products Table =================
 
 const Products = sequelize.define("Products", {
   product_ID: {
@@ -125,6 +155,9 @@ const Products = sequelize.define("Products", {
   }
 });
 
+
+// ================= Category Table =================
+
 const Category = sequelize.define("Category", {
   category_ID: {
     type: Sequelize.STRING,
@@ -136,6 +169,9 @@ const Category = sequelize.define("Category", {
     allowNull: false,
   },
 });
+
+
+// ================= Supliers Table =================
 
 const Supliers = sequelize.define("Supliers", {
   suplier_ID: {
@@ -168,8 +204,11 @@ const Supliers = sequelize.define("Supliers", {
 sequelize.sync();
 
 
-// ====================== Customers ======================
+// ===================================================
+// ----------------- CRUD Operations -----------------
+// ===================================================
 
+// ==================== Customers ====================
 
 app.get("/customers", (req, res) => 
 {
@@ -238,8 +277,7 @@ app.delete("/customers/:id", (req, res) =>
 });
 
 
-// ====================== Orders ======================
-
+// ==================== Orders ====================
 
 app.get("/orders", (req, res) => 
 {
@@ -308,8 +346,7 @@ app.delete("/orders/:id", (req, res) =>
 });
 
 
-// ====================== OrderDetail ======================
-
+// ================= OrdersDetail =================
 
 app.get("/details", (req, res) => 
 {
@@ -378,78 +415,7 @@ app.delete("/details/:id", (req, res) =>
 });
 
 
-// ====================== Suplier ======================
-
-
-app.get("/supliers", (req, res) => 
-{
-  Supliers.findAll().then(supliers => {
-      res.json(details);
-  })
-  .catch((err) => {
-      res.status(500).send(err);
-  });
-});
-  
-app.get("/supliers/:id", (req, res) => 
-{
-  Supliers.findByPk(req.params.id).then(suplierId => {
-    if (!suplierId)
-        res.status(404).send();
-    else 
-        res.json(suplierId);
-  });
-});
-
-app.post("/supliers", (req, res) => 
-{
-  Supliers.create(req.body).then(suplier => {
-      res.json(suplier);
-  })
-  .catch((err) => {
-      res.status(500).send(err);
-  });
-});
-  
-app.put("/suplierss/:id", (req, res) => 
-{
-  Supliers.findByPk(req.params.id).then(suplierId => {
-    if (!suplierId)
-      res.status(404).send();
-    else
-      suplierId.update(req.body).then(suplierId => {
-        res.json(suplierId);
-      })
-      .catch((err) => {
-        res.status(500).send(err);
-      });
-  })
-  .catch((err) => {
-    res.status(500).send(err);
-  });
-});
-  
-app.delete("/supliers/:id", (req, res) => 
-{
-  Supliers.findByPk(req.params.id).then(suplierId => {
-    if (!suplierId) 
-      res.status(404).send();
-    else
-      suplierId.destroy().then(() => {
-          res.json(suplierId);
-      })
-      .catch((err) => {
-          res.status(500).send(err);
-      });
-  })
-  .catch((err) => {
-      res.status(500).send(err);
-  });
-});
-
-
-// ====================== Products ======================
-
+// ==================== Products ====================
 
 app.get("/products", (req, res) => 
 {
@@ -521,8 +487,7 @@ app.delete("/products/:id", (req, res) =>
 });
 
 
-// ====================== Category ======================
-
+// ==================== Category ====================
 
 app.get("/category", (req, res) => 
 {
@@ -589,7 +554,80 @@ app.delete("/category/:id", (req, res) =>
       res.status(500).send(err);
   });
 });
+
+
+// ==================== Supliers ====================
+
+app.get("/supliers", (req, res) => 
+{
+  Supliers.findAll().then(supliers => {
+      res.json(details);
+  })
+  .catch((err) => {
+      res.status(500).send(err);
+  });
+});
   
+app.get("/supliers/:id", (req, res) => 
+{
+  Supliers.findByPk(req.params.id).then(suplierId => {
+    if (!suplierId)
+        res.status(404).send();
+    else 
+        res.json(suplierId);
+  });
+});
+
+app.post("/supliers", (req, res) => 
+{
+  Supliers.create(req.body).then(suplier => {
+      res.json(suplier);
+  })
+  .catch((err) => {
+      res.status(500).send(err);
+  });
+});
+  
+app.put("/suplierss/:id", (req, res) => 
+{
+  Supliers.findByPk(req.params.id).then(suplierId => {
+    if (!suplierId)
+      res.status(404).send();
+    else
+      suplierId.update(req.body).then(suplierId => {
+        res.json(suplierId);
+      })
+      .catch((err) => {
+        res.status(500).send(err);
+      });
+  })
+  .catch((err) => {
+    res.status(500).send(err);
+  });
+});
+  
+app.delete("/supliers/:id", (req, res) => 
+{
+  Supliers.findByPk(req.params.id).then(suplierId => {
+    if (!suplierId) 
+      res.status(404).send();
+    else
+      suplierId.destroy().then(() => {
+          res.json(suplierId);
+      })
+      .catch((err) => {
+          res.status(500).send(err);
+      });
+  })
+  .catch((err) => {
+      res.status(500).send(err);
+  });
+});
+  
+
+// =====================================================
+// ----------------- Server Connection -----------------
+// =====================================================
 
 require("dotenv").config();
 const port = process.env.PORT || 3000;
