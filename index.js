@@ -214,20 +214,17 @@ app.put("/products/:id", (req, res) => {
     });
 });
 
-// route to delete a book
-app.delete("/books/:id", (req, res) => {
-  Book.findByPk(req.params.id)
-    .then((book) => {
-      if (!book) res.status(404).send();
-      else
-        book
-          .destroy()
-          .then(() => {
-            res.json(book);
-          })
-          .catch((err) => {
-            res.status(500).send(err);
-          });
+app.delete("/products/:id", (req, res) => {
+    Products.findByPk(req.params.id).then((productId) => {
+        if (!productId) 
+            res.status(404).send();
+        else
+            book.destroy().then(() => {
+                res.json(book);
+            })
+            .catch((err) => {
+                res.status(500).send(err);
+            });
     })
     .catch((err) => {
       res.status(500).send(err);
