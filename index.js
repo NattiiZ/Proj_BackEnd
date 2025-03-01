@@ -20,6 +20,7 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 const Book = sequelize.define('product', {
     product_ID: {
         type: Sequelize.STRING,
+        allowNull: false,
         primaryKey: true,
     },
     name: {
