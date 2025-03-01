@@ -1,121 +1,245 @@
-require('dotenv').config();
-const port = process.env.PORT || 3000;
-
 const express = require("express");
 const app = express();
-const Sequelize = require('sequelize');
+const Sequelize = require("sequelize");
 
-// parse incoming requests
 app.use(express.json());
 
-
-// open a database connection
-const sequelize = new Sequelize('database', 'username', 'password', {
-    host: 'localhost',
-    dialect: 'sqlite',
-    storage: './Database/Store.sqlite',
+const sequelize = new Sequelize("database", "username", "password", {
+  host: "localhost",
+  dialect: "sqlite",
+  storage: "./Database/Store.sqlite",
 });
 
-// define the book model
-const Book = sequelize.define('product', {
-    product_ID: {
-        type: Sequelize.STRING,
-        primaryKey: true,
-    },
-    name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-    },
-    brand: {
-        type: Sequelize.STRING,
-        allowNull: false,
-    },
-    category_ID: {
-        type: Sequelize.STRING,
-        allowNull: false,
-    },
-    unitPrice: {
-        type: Sequelize.FLOAT,
-        allowNull: false,
-    },
-    stockQty: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-    },
-    suplier_ID: {
-        type: Sequelize.STRING,
-        allowNull: false,
-    },
+const Customers = sequelize.define("Customers", {
+  customer_ID: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    primaryKey: true,
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  phone: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  address: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  joinDate: {
+    type: Sequelize.DATE,
+    allowNull: false,
+  },
 });
 
-// create the table if it doesn't exist
-sequelize.sync()
-
-
-// route to get all books
-app.get("/books", (req, res) => {
-   Book.findAll().then(books => {
-       res.json(books);
-   }).catch(err => {
-       res.status(500).send(err);
-   });
+const Orders = sequelize.define("Orders", {
+  order_ID: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    primaryKey: true,
+  },
+  customer_ID: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  orderDate: {
+    type: Sequelize.DATE,
+    allowNull: false,
+  },
+  totalAmount: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+  },
+  status: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
 });
 
-// route to get a book by id
-app.get('/books/:id', (req, res) => {
-    Book.findByPk(req.params.id).then(book => {
-        if (!book)
-            res.status(404).send();
-        else
-            res.json(book);
-    }).catch(err => {
+const OrderDetail = sequelize.define("OrderDetail", {
+  orderDetail_ID: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    primaryKey: true,
+  },
+  order_ID: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  product_ID: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  quantity: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+  unitPrice: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+  },
+  subtotal: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+  },
+});
+
+const Products = sequelize.define("Products", {
+  product_ID: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    primaryKey: true,
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  brand: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  category_ID: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  unitPrice: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+  },
+  stockQty: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+  suplier_ID: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
+
+const Category = sequelize.define("Category", {
+  category_ID: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    primaryKey: true,
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
+
+const Supliers = sequelize.define("Supliers", {
+  suplier_ID: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    primaryKey: true,
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  contactName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  phone: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  address: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
+
+sequelize.sync();
+
+
+app.get("/products", (req, res) => 
+{
+    Products.findAll().then((products) => {
+        res.json(products);
+    })
+    .catch((err) => {
         res.status(500).send(err);
     });
 });
 
-// route to add a new book
-app.post('/books', (req, res) => {
-    Book.create(req.body).then(book => {
-        res.json(book);
-    }
-    ).catch(err => {
+app.get("/products/:id", (req, res) => 
+{
+    Products.findByPk(req.params.id).then((productId) => {
+        if (!productId) 
+            res.status(404).send();
+        else 
+            res.json(productId);
+    })
+    .catch((err) => {
+          res.status(500).send(err);
+    });
+});
+
+app.post("/addProduct", (req, res) => {
+    Products.create(req.body).then((product) => {
+        res.json(product);
+    })
+    .catch((err) => {
         res.status(500).send(err);
     });
 });
 
 // route to update a book
-app.put('/books/:id', (req, res) => {
-    Book.findByPk(req.params.id).then(book => {
-        if (!book)
-            res.status(404).send();
-        else
-            book.update(req.body).then(book => {
-                res.json(book);
-            }).catch(err => {
-                res.status(500).send(err);
-            });
-    }).catch(err => {
-        res.status(500).send(err);
+app.put("/books/:id", (req, res) => {
+  Book.findByPk(req.params.id)
+    .then((book) => {
+      if (!book) res.status(404).send();
+      else
+        book
+          .update(req.body)
+          .then((book) => {
+            res.json(book);
+          })
+          .catch((err) => {
+            res.status(500).send(err);
+          });
+    })
+    .catch((err) => {
+      res.status(500).send(err);
     });
 });
 
 // route to delete a book
-app.delete('/books/:id', (req, res) => {
-    Book.findByPk(req.params.id).then(book => {
-        if (!book)
-            res.status(404).send();
-        else
-            book.destroy().then(() => {
-                res.json(book);
-            }).catch(err => {
-                res.status(500).send(err);
-            });
-    }).catch(err => {
-        res.status(500).send(err);
+app.delete("/books/:id", (req, res) => {
+  Book.findByPk(req.params.id)
+    .then((book) => {
+      if (!book) res.status(404).send();
+      else
+        book
+          .destroy()
+          .then(() => {
+            res.json(book);
+          })
+          .catch((err) => {
+            res.status(500).send(err);
+          });
+    })
+    .catch((err) => {
+      res.status(500).send(err);
     });
 });
 
+require("dotenv").config();
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-    console.log(`Server listening at http://localhost:${port}`);
+  console.log(`Server listening at http://localhost:${port}`);
 });
