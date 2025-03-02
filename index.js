@@ -1,6 +1,8 @@
-// ===================================================
-// --------------- Required Libraries ---------------
-// ===================================================
+// =========================================================================================================
+// -------------------------------------------- library Imports --------------------------------------------
+// =========================================================================================================
+
+require("dotenv").config();
 
 const express = require("express");
 const app = express();
@@ -9,11 +11,14 @@ const Sequelize = require("sequelize");
 app.use(express.json());
 
 
-// ===================================================
-// --------------- Database Connection ---------------
-// ===================================================
 
-// ================= Define Database =================
+
+// =========================================================================================================
+// ------------------------------------------ Database Connection ------------------------------------------
+// =========================================================================================================
+
+
+// =============== Database Connection ===============
 
 const sequelize = new Sequelize("database", "username", "password", {
   host: "localhost",
@@ -26,9 +31,13 @@ const sequelize = new Sequelize("database", "username", "password", {
 
 const Customers = sequelize.define("Customers", {
   customer_ID: {
-    type: Sequelize.STRING,
+    type: Sequelize.INTEGER,
     allowNull: false,
     primaryKey: true,
+    get() {
+      const value = this.getDataValue('customer_ID');
+      return value ? `C${String(value).padStart(4, '0')}` : value;
+    }
   },
   name: {
     type: Sequelize.STRING,
@@ -37,10 +46,16 @@ const Customers = sequelize.define("Customers", {
   email: {
     type: Sequelize.STRING,
     allowNull: false,
+    validate: {
+      isEmail: true
+    },
   },
   phone: {
     type: Sequelize.STRING,
     allowNull: false,
+    validate: {
+      is: /^[0-9]{10}$/i
+    }
   },
   address: {
     type: Sequelize.STRING,
@@ -57,23 +72,138 @@ const Customers = sequelize.define("Customers", {
 });
 
 
+// ================= Suppliers Table =================
+
+const Suppliers = sequelize.define("Suppliers", {
+  supplier_ID: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    get() {
+      const value = this.getDataValue('supplier_ID');
+      return value ? `S${String(value).padStart(2, '0')}` : value;
+    }
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  contactName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      isEmail: true
+    },
+  },
+  phone: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      is: /^[0-9]{10}$/i
+    }
+  },
+  address: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
+
+
+// ================= Category Table =================
+
+const Category = sequelize.define("Categories", {
+  category_ID: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    get() {
+      const value = this.getDataValue('category_ID');
+      return value ? `T${String(value).padStart(2, '0')}` : value;
+    }
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
+
+
+// ================= Products Table =================
+
+const Products = sequelize.define("Products", {
+  product_ID: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    get() {
+      const value = this.getDataValue('product_ID');
+      return value ? `P${String(value).padStart(3, '0')}` : value;
+    }
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  brand: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  category_ID: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    references: {
+      model: Category,
+      key: "category_ID",
+    },
+  },
+  unitPrice: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+  },
+  stockQty: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+  supplier_ID: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    references: {
+      model: Suppliers,
+      key: "supplier_ID",
+    },
+  }
+});
+
+
 // ================= Orders Table =================
 
 const Orders = sequelize.define("Orders", {
   order_ID: {
-    type: Sequelize.STRING,
+    type: Sequelize.INTEGER,
     allowNull: false,
     primaryKey: true,
+    get() {
+      const value = this.getDataValue('order_ID');
+      return value ? `OD${String(value).padStart(3, '0')}` : value;
+    }
   },
   customer_ID: {
     type: Sequelize.STRING,
     allowNull: false,
+    references: {
+      model: Customers,
+      key: "customer_ID",
+    },
   },
   orderDate: {
     type: Sequelize.DATE,
     defaultValue: Sequelize.NOW,
     get() {
-      return new Date(this.getDataValue('joinDate')).toLocaleString("th-TH", { timeZone: "Asia/Bangkok" });
+      return new Date(this.getDataValue('orderDate')).toLocaleString("th-TH", { timeZone: "Asia/Bangkok" });
     },
     allowNull: false,
   },
@@ -90,19 +220,31 @@ const Orders = sequelize.define("Orders", {
 
 // ============== OrdersDetail Table ==============
 
-const OrderDetail = sequelize.define("OrderDetail", {
+const OrderDetails = sequelize.define("OrderDetails", {
   orderDetail_ID: {
-    type: Sequelize.STRING,
+    type: Sequelize.INTEGER,
     allowNull: false,
     primaryKey: true,
+    get() {
+      const value = this.getDataValue('orderDetail_ID');
+      return value ? `DT${String(value).padStart(2, '0')}` : value;
+    }
   },
   order_ID: {
     type: Sequelize.STRING,
     allowNull: false,
+    references: {
+      model: Orders,
+      key: "order_ID",
+    },
   },
   product_ID: {
     type: Sequelize.STRING,
     allowNull: false,
+    references: {
+      model: Products,
+      key: "product_ID",
+    },
   },
   quantity: {
     type: Sequelize.INTEGER,
@@ -119,101 +261,47 @@ const OrderDetail = sequelize.define("OrderDetail", {
 });
 
 
-// ================= Products Table =================
+// ================== Relationships ==================
 
-const Products = sequelize.define("Products", {
-  product_ID: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    primaryKey: true,
-  },
-  name: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  brand: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  category_ID: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    foreignKey: true,
-  },
-  unitPrice: {
-    type: Sequelize.FLOAT,
-    allowNull: false,
-  },
-  stockQty: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-  },
-  suplier_ID: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    foreignKey: true,
-  }
-});
+// ความสัมพันธ์ระหว่าง Customers และ Orders
+Customers.hasMany(Orders, { foreignKey: "customer_ID" });
+Orders.belongsTo(Customers, { foreignKey: "customer_ID" });
+
+// ความสัมพันธ์ระหว่าง Orders และ OrderDetail
+Orders.hasMany(OrderDetails, { foreignKey: "order_ID" });
+OrderDetails.belongsTo(Orders, { foreignKey: "order_ID" });
+
+// ความสัมพันธ์ระหว่าง Products และ Category
+Products.belongsTo(Category, { foreignKey: "category_ID" });
+Category.hasMany(Products, { foreignKey: "category_ID" });
+
+// ความสัมพันธ์ระหว่าง Products และ Suppliers
+Products.belongsTo(Suppliers, { foreignKey: "supplier_ID" });
+Suppliers.hasMany(Products, { foreignKey: "supplier_ID" });
+
+// ความสัมพันธ์ระหว่าง OrderDetails และ Products
+OrderDetails.belongsTo(Products, { foreignKey: "product_ID" });
+Products.hasMany(OrderDetails, { foreignKey: "product_ID" });
 
 
-// ================= Category Table =================
-
-const Category = sequelize.define("Category", {
-  category_ID: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    primaryKey: true,
-  },
-  name: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-});
-
-
-// ================= Supliers Table =================
-
-const Supliers = sequelize.define("Supliers", {
-  suplier_ID: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    primaryKey: true,
-  },
-  name: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  contactName: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  phone: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  email: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  address: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-});
+// ================== Database Sync ==================
 
 sequelize.sync();
 
 
-// ===================================================
-// ----------------- CRUD Operations -----------------
-// ===================================================
+
+
+// =========================================================================================================
+// -------------------------------------------- CRUD Operations --------------------------------------------
+// =========================================================================================================
+
 
 // ==================== Customers ====================
 
 app.get("/customers", (req, res) => 
 {
   Customers.findAll().then(customers => {
-      res.json(category);
+      res.json(customers);
   })
   .catch((err) => {
       res.status(500).send(err);
@@ -224,7 +312,7 @@ app.get("/customers/:id", (req, res) =>
 {
   Customers.findByPk(req.params.id).then(customerId => {
     if (!customerId)
-        res.status(404).send();
+        res.status(404).send('Not found!');
     else 
         res.json(customerId);
   });
@@ -244,7 +332,7 @@ app.put("/customers/:id", (req, res) =>
 {
   Customers.findByPk(req.params.id).then(customerId => {
     if (!customerId)
-      res.status(404).send();
+      res.status(404).send('Not found!');
     else
       customerId.update(req.body).then(customerId => {
         res.json(customerId);
@@ -262,7 +350,7 @@ app.delete("/customers/:id", (req, res) =>
 {
   Customers.findByPk(req.params.id).then(customerId => {
     if (!customerId) 
-      res.status(404).send();
+      res.status(404).send('Not found!');
     else
       customerId.destroy().then(() => {
           res.json(customerId);
@@ -293,9 +381,9 @@ app.get("/orders/:id", (req, res) =>
 {
   Orders.findByPk(req.params.id).then(orderId => {
     if (!orderId)
-        res.status(404).send();
+        res.status(404).send('Not found!');
     else 
-        res.json(orderID);
+        res.json(orderId);
   });
 });
 
@@ -313,7 +401,7 @@ app.put("/orders/:id", (req, res) =>
 {
   Orders.findByPk(req.params.id).then(orderId => {
     if (!orderId)
-      res.status(404).send();
+      res.status(404).send('Not found!');
     else
       orderId.update(req.body).then(orderId => {
         res.json(orderId);
@@ -331,7 +419,7 @@ app.delete("/orders/:id", (req, res) =>
 {
   Orders.findByPk(req.params.id).then(orderId => {
     if (!orderId) 
-      res.status(404).send();
+      res.status(404).send('Not found!');
     else
       orderId.destroy().then(() => {
           res.json(orderId);
@@ -350,7 +438,7 @@ app.delete("/orders/:id", (req, res) =>
 
 app.get("/details", (req, res) => 
 {
-  OrderDetail.findAll().then(details => {
+  OrderDetails.findAll().then(details => {
       res.json(details);
   })
   .catch((err) => {
@@ -358,11 +446,11 @@ app.get("/details", (req, res) =>
   });
 });
   
-app.get("/detail/:id", (req, res) => 
+app.get("/details/:id", (req, res) => 
 {
-  OrderDetail.findByPk(req.params.id).then(detailId => {
+  OrderDetails.findByPk(req.params.id).then(detailId => {
     if (!detailId)
-        res.status(404).send();
+        res.status(404).send('Not found!');
     else 
         res.json(detailId);
   });
@@ -370,7 +458,7 @@ app.get("/detail/:id", (req, res) =>
 
 app.post("/details", (req, res) => 
 {
-  OrderDetail.create(req.body).then(detail => {
+  OrderDetails.create(req.body).then(detail => {
       res.json(detail);
   })
   .catch((err) => {
@@ -380,9 +468,9 @@ app.post("/details", (req, res) =>
   
 app.put("/details/:id", (req, res) => 
 {
-  OrderDetail.findByPk(req.params.id).then(detailId => {
+  OrderDetails.findByPk(req.params.id).then(detailId => {
     if (!detailId)
-      res.status(404).send();
+      res.status(404).send('Not found!');
     else
       detailId.update(req.body).then(detailId => {
         res.json(detailId);
@@ -398,9 +486,9 @@ app.put("/details/:id", (req, res) =>
   
 app.delete("/details/:id", (req, res) => 
 {
-  OrderDetail.findByPk(req.params.id).then(detailId => {
+  OrderDetails.findByPk(req.params.id).then(detailId => {
     if (!detailId) 
-      res.status(404).send();
+      res.status(404).send('Not found!');
     else
       detailId.destroy().then(() => {
           res.json(detailId);
@@ -431,7 +519,7 @@ app.get("/products/:id", (req, res) =>
 {
   Products.findByPk(req.params.id).then(productId => {
       if (!productId) 
-          res.status(404).send();
+          res.status(404).send('Not found!');
       else 
           res.json(productId);
   })
@@ -454,10 +542,10 @@ app.put("/products/:id", (req, res) =>
 {
   Products.findByPk(req.params.id).then(productId => {
       if (!productId) 
-          res.status(404).send();
+          res.status(404).send('Not found!');
       else
           productId.update(req.body).then(productId => {
-              res.json(book);
+              res.json(productId);
           })
           .catch((err) => {
               res.status(500).send(err);
@@ -472,7 +560,7 @@ app.delete("/products/:id", (req, res) =>
 {
   Products.findByPk(req.params.id).then(productId => {
       if (!productId) 
-          res.status(404).send();
+          res.status(404).send('Not found!');
       else
           productId.destroy().then(() => {
               res.json(productId);
@@ -503,7 +591,7 @@ app.get("/category/:id", (req, res) =>
 {
   Category.findByPk(req.params.id).then(categoryId => {
       if (!categoryId) 
-          res.status(404).send();
+          res.status(404).send('Not found!');
       else 
           res.json(categoryId);
   });
@@ -523,7 +611,7 @@ app.put("/category/:id", (req, res) =>
 {
   Category.findByPk(req.params.id).then(categoryId => {
     if (!categoryId)
-      res.status(404).send();
+      res.status(404).send('Not found!');
     else
       categoryId.update(req.body).then(category => {
         res.json(categoryId);
@@ -541,7 +629,7 @@ app.delete("/category/:id", (req, res) =>
 {
   Category.findByPk(req.params.id).then(categoryId => {
     if (!categoryId) 
-      res.status(404).send();
+      res.status(404).send('Not found!');
     else
       categoryId.destroy().then(() => {
           res.json(categoryId);
@@ -556,46 +644,46 @@ app.delete("/category/:id", (req, res) =>
 });
 
 
-// ==================== Supliers ====================
+// ==================== Suppliers ====================
 
-app.get("/supliers", (req, res) => 
+app.get("/suppliers", (req, res) => 
 {
-  Supliers.findAll().then(supliers => {
-      res.json(details);
+  Suppliers.findAll().then(suppliers => {
+      res.json(suppliers);
   })
   .catch((err) => {
       res.status(500).send(err);
   });
 });
   
-app.get("/supliers/:id", (req, res) => 
+app.get("/suppliers/:id", (req, res) => 
 {
-  Supliers.findByPk(req.params.id).then(suplierId => {
-    if (!suplierId)
-        res.status(404).send();
+  Suppliers.findByPk(req.params.id).then(supplierId => {
+    if (!supplierId)
+        res.status(404).send('Not found!');
     else 
-        res.json(suplierId);
+        res.json(supplierId);
   });
 });
 
-app.post("/supliers", (req, res) => 
+app.post("/suppliers", (req, res) => 
 {
-  Supliers.create(req.body).then(suplier => {
-      res.json(suplier);
+  Suppliers.create(req.body).then(supplier => {
+      res.json(supplier);
   })
   .catch((err) => {
       res.status(500).send(err);
   });
 });
   
-app.put("/suplierss/:id", (req, res) => 
+app.put("/suppliers/:id", (req, res) => 
 {
-  Supliers.findByPk(req.params.id).then(suplierId => {
-    if (!suplierId)
-      res.status(404).send();
+  Suppliers.findByPk(req.params.id).then(supplierId => {
+    if (!supplierId)
+      res.status(404).send('Not found!');
     else
-      suplierId.update(req.body).then(suplierId => {
-        res.json(suplierId);
+      supplierId.update(req.body).then(supplierId => {
+        res.json(supplierId);
       })
       .catch((err) => {
         res.status(500).send(err);
@@ -606,14 +694,14 @@ app.put("/suplierss/:id", (req, res) =>
   });
 });
   
-app.delete("/supliers/:id", (req, res) => 
+app.delete("/suppliers/:id", (req, res) => 
 {
-  Supliers.findByPk(req.params.id).then(suplierId => {
-    if (!suplierId) 
-      res.status(404).send();
+  Suppliers.findByPk(req.params.id).then(supplierId => {
+    if (!supplierId) 
+      res.status(404).send('Not found!');
     else
-      suplierId.destroy().then(() => {
-          res.json(suplierId);
+      supplierId.destroy().then(() => {
+          res.json(supplierId);
       })
       .catch((err) => {
           res.status(500).send(err);
@@ -623,13 +711,14 @@ app.delete("/supliers/:id", (req, res) =>
       res.status(500).send(err);
   });
 });
-  
 
-// =====================================================
-// ----------------- Server Connection -----------------
-// =====================================================
 
-require("dotenv").config();
+
+
+// =========================================================================================================
+// -------------------------------------------- Server Connection ------------------------------------------
+// =========================================================================================================
+
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
