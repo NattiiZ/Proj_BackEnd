@@ -68,7 +68,6 @@ const Users = sequelize.define("Users", {
     get() {
       return new Date(this.getDataValue('joinDate')).toLocaleString("th-TH", { timeZone: "Asia/Bangkok" });
     },
-    // allowNull: false,
   },
   userType_ID: {
     type: Sequelize.INTEGER,
@@ -81,106 +80,102 @@ const Users = sequelize.define("Users", {
 });
 
 
-// // ================= Customers Table =================
+// ================= Customers Table =================
 
-// const Customers = sequelize.define("Customers", {
-//   customer_ID: {
-//     type: Sequelize.INTEGER,
-//     defaultValue: this.autoincrement,
-//     get() {
-//       const value = this.getDataValue('customer_ID');
-//       return value ? `C${String(value).padStart(3, '0')}` : value;
-//     },
-//     primaryKey: true,
+const Customers = sequelize.define("Customers", {
+  customer_ID: {
+    type: Sequelize.INTEGER,
+    defaultValue: this.autoincrement,
+    get() {
+      const value = this.getDataValue('customer_ID');
+      return value ? `C${String(value).padStart(3, '0')}` : value;
+    },
+    primaryKey: true,
     
-//   },
-//   name: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//   },
-//   email: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//     validate: {
-//       isEmail: true
-//     },
-//   },
-//   phone: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//     validate: {
-//       is: /^[0-9]{10}$/i
-//     }
-//   },
-//   address: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//   },
-//   user_ID: {
-//     type: Sequelize.INTEGER,
-//     allowNull: false,
-//     references: {
-//       model: Users,
-//       key: "userID",
-//     }
-//   },
-// });
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      isEmail: true
+    },
+  },
+  phone: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      is: /^[0-9]{10}$/i
+    }
+  },
+  address: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  user_ID: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: {
+      model: Users,
+      key: "user_ID",
+    }
+  },
+});
 
 
-// // ================= Suppliers Table =================
+// ================= Suppliers Table =================
 
-// const Suppliers = sequelize.define("Suppliers", {
-//   supplier_ID: {
-//     type: Sequelize.INTEGER,
-//     defaultValue: this.autoincrement,
-//     // get() {
-//     //   const value = this.getDataValue('supplier_ID');
-//     //   return value ? `S${String(value).padStart(2, '0')}` : value;
-//     // },
-//     primaryKey: true,
-//   },
-//   name: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//   },
-//   email: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//     validate: {
-//       isEmail: true
-//     },
-//   },
-//   phone: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//     validate: {
-//       is: /^[0-9]{10}$/i
-//     }
-//   },
-//   address: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//   },
-// });
+const Suppliers = sequelize.define("Suppliers", {
+  supplier_ID: {
+    type: Sequelize.INTEGER,
+    defaultValue: this.autoincrement,
+    // get() {
+    //   const value = this.getDataValue('supplier_ID');
+    //   return value ? `S${String(value).padStart(2, '0')}` : value;
+    // },
+    primaryKey: true,
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      isEmail: true
+    },
+  },
+  phone: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      is: /^[0-9]{10}$/i
+    }
+  },
+});
 
 
-// // ================= Category Table =================
+// ================= Category Table =================
 
-// const Categories = sequelize.define("Categories", {
-//   category_ID: {
-//     type: Sequelize.INTEGER,
-//     defaultValue: this.autoincrement,
-//     // get() {
-//     //   const value = this.getDataValue('category_ID');
-//     //   return value ? `T${String(value).padStart(2, '0')}` : value;
-//     // },
-//     primaryKey: true,
-//   },
-//   name: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//   },
-// });
+const Categories = sequelize.define("Categories", {
+  category_ID: {
+    type: Sequelize.INTEGER,
+    defaultValue: this.autoincrement,
+    // get() {
+    //   const value = this.getDataValue('category_ID');
+    //   return value ? `T${String(value).padStart(2, '0')}` : value;
+    // },
+    primaryKey: true,
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
 
 
 // // // ================= Products Table =================
