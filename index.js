@@ -178,47 +178,47 @@ const Categories = sequelize.define("Categories", {
 });
 
 
-// // // ================= Products Table =================
+// // ================= Products Table =================
 
-// const Products = sequelize.define("Products", {
-//   product_ID: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//     primaryKey: true,
-//   },
-//   name: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//   },
-//   brand: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//   },
-//   category_ID: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//     references: {
-//       model: Categories,
-//       key: "category_ID",
-//     },
-//   },
-//   unitPrice: {
-//     type: Sequelize.FLOAT,
-//     allowNull: false,
-//   },
-//   stockQty: {
-//     type: Sequelize.INTEGER,
-//     allowNull: false,
-//   },
-//   supplier_ID: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//     references: {
-//       model: Suppliers,
-//       key: "supplier_ID",
-//     },
-//   }
-// });
+const Products = sequelize.define("Products", {
+  product_ID: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    primaryKey: true,
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  brand: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  category_ID: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    references: {
+      model: Categories,
+      key: "category_ID",
+    },
+  },
+  unitPrice: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+  },
+  stockQty: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+  supplier_ID: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    references: {
+      model: Suppliers,
+      key: "supplier_ID",
+    },
+  }
+});
 
 
 // // ================= Orders Table =================
@@ -675,6 +675,78 @@ app.delete("/category/:id", (req, res) =>
 });
 
 
+// // ==================== Products ====================
+
+// app.get("/products", (req, res) => 
+// {
+//   Products.findAll().then(products => {
+//       res.json(products);
+//   })
+//   .catch((err) => {
+//       res.status(500).send(err);
+//   });
+// });
+
+// app.get("/products/:id", (req, res) => 
+// {
+//   Products.findByPk(req.params.id).then(productId => {
+//       if (!productId) 
+//           res.status(404).send('Not found!');
+//       else 
+//           res.json(productId);
+//   })
+//   .catch((err) => {
+//         res.status(500).send(err);
+//   });
+// });
+
+// app.post("/products", (req, res) => 
+// {
+//   Products.create(req.body).then(product => {
+//       res.json(product);
+//   })
+//   .catch((err) => {
+//       res.status(500).send(err);
+//   });
+// });
+
+// app.put("/products/:id", (req, res) => 
+// {
+//   Products.findByPk(req.params.id).then(productId => {
+//       if (!productId) 
+//           res.status(404).send('Not found!');
+//       else
+//           productId.update(req.body).then(productId => {
+//               res.json(productId);
+//           })
+//           .catch((err) => {
+//               res.status(500).send(err);
+//           });
+//   })
+//   .catch((err) => {
+//     res.status(500).send(err);
+//   });
+// });
+
+// app.delete("/products/:id", (req, res) => 
+// {
+//   Products.findByPk(req.params.id).then(productId => {
+//       if (!productId) 
+//           res.status(404).send('Not found!');
+//       else
+//           productId.destroy().then(() => {
+//               res.json(productId);
+//           })
+//           .catch((err) => {
+//               res.status(500).send(err);
+//           });
+//   })
+//   .catch((err) => {
+//       res.status(500).send(err);
+//   });
+// });
+
+
 // // ==================== Orders ====================
 
 // app.get("/orders", (req, res) => 
@@ -813,76 +885,7 @@ app.delete("/category/:id", (req, res) =>
 // });
 
 
-// // ==================== Products ====================
 
-// app.get("/products", (req, res) => 
-// {
-//   Products.findAll().then(products => {
-//       res.json(products);
-//   })
-//   .catch((err) => {
-//       res.status(500).send(err);
-//   });
-// });
-
-// app.get("/products/:id", (req, res) => 
-// {
-//   Products.findByPk(req.params.id).then(productId => {
-//       if (!productId) 
-//           res.status(404).send('Not found!');
-//       else 
-//           res.json(productId);
-//   })
-//   .catch((err) => {
-//         res.status(500).send(err);
-//   });
-// });
-
-// app.post("/products", (req, res) => 
-// {
-//   Products.create(req.body).then(product => {
-//       res.json(product);
-//   })
-//   .catch((err) => {
-//       res.status(500).send(err);
-//   });
-// });
-
-// app.put("/products/:id", (req, res) => 
-// {
-//   Products.findByPk(req.params.id).then(productId => {
-//       if (!productId) 
-//           res.status(404).send('Not found!');
-//       else
-//           productId.update(req.body).then(productId => {
-//               res.json(productId);
-//           })
-//           .catch((err) => {
-//               res.status(500).send(err);
-//           });
-//   })
-//   .catch((err) => {
-//     res.status(500).send(err);
-//   });
-// });
-
-// app.delete("/products/:id", (req, res) => 
-// {
-//   Products.findByPk(req.params.id).then(productId => {
-//       if (!productId) 
-//           res.status(404).send('Not found!');
-//       else
-//           productId.destroy().then(() => {
-//               res.json(productId);
-//           })
-//           .catch((err) => {
-//               res.status(500).send(err);
-//           });
-//   })
-//   .catch((err) => {
-//       res.status(500).send(err);
-//   });
-// });
 
 
 
