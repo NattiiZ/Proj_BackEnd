@@ -251,7 +251,7 @@ const Products = sequelize.define("Products", {
       model: Suppliers,
       key: "supplier_ID",
     },
-  }
+  },
 });
 
 
@@ -267,7 +267,7 @@ const Status = sequelize.define("Status", {
   statusName: {
     type: Sequelize.STRING,
     allowNull: false,
-  },
+  }
 });
 
 
