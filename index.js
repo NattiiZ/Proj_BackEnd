@@ -285,7 +285,6 @@ const Orders = sequelize.define("Orders", {
     get() {
       return new Date(this.getDataValue('orderDate')).toLocaleString("th-TH", { timeZone: "Asia/Bangkok" });
     },
-    allowNull: false,
   },
   totalAmount: {
     type: Sequelize.FLOAT,
@@ -302,43 +301,43 @@ const Orders = sequelize.define("Orders", {
 });
 
 
-// // ============== OrdersDetail Table ==============
+// ============== OrdersDetail Table ==============
 
-// const OrderDetails = sequelize.define("OrderDetails", {
-//   orderDetail_ID: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//     primaryKey: true,
-//   },
-//   order_ID: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//     references: {
-//       model: Orders,
-//       key: "order_ID",
-//     },
-//   },
-//   product_ID: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//     references: {
-//       model: Products,
-//       key: "product_ID",
-//     },
-//   },
-//   quantity: {
-//     type: Sequelize.INTEGER,
-//     allowNull: false,
-//   },
-//   unitPrice: {
-//     type: Sequelize.FLOAT,
-//     allowNull: false,
-//   },
-//   subtotal: {
-//     type: Sequelize.FLOAT,
-//     allowNull: false,
-//   },
-// });
+const OrderDetails = sequelize.define("OrderDetails", {
+  orderDetail_ID: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    primaryKey: true,
+  },
+  order_ID: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    references: {
+      model: Orders,
+      key: "order_ID",
+    },
+  },
+  product_ID: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    references: {
+      model: Products,
+      key: "product_ID",
+    },
+  },
+  quantity: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+  unitPrice: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+  },
+  subtotal: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+  },
+});
 
 
 // // ================== Relationships ==================
@@ -1003,73 +1002,73 @@ app.delete("/orders/:id", (req, res) =>
 });
 
 
-// // ================= OrdersDetail =================
+// ================= OrdersDetail =================
 
-// app.get("/details", (req, res) => 
-// {
-//   OrderDetails.findAll().then(details => {
-//       res.json(details);
-//   })
-//   .catch((err) => {
-//       res.status(500).send(err);
-//   });
-// });
+app.get("/details", (req, res) => 
+{
+  OrderDetails.findAll().then(details => {
+      res.json(details);
+  })
+  .catch((err) => {
+      res.status(500).send(err);
+  });
+});
   
-// app.get("/details/:id", (req, res) => 
-// {
-//   OrderDetails.findByPk(req.params.id).then(detailId => {
-//     if (!detailId)
-//         res.status(404).send('Not found!');
-//     else 
-//         res.json(detailId);
-//   });
-// });
+app.get("/details/:id", (req, res) => 
+{
+  OrderDetails.findByPk(req.params.id).then(detailId => {
+    if (!detailId)
+        res.status(404).send('Not found!');
+    else 
+        res.json(detailId);
+  });
+});
 
-// app.post("/details", (req, res) => 
-// {
-//   OrderDetails.create(req.body).then(detail => {
-//       res.json(detail);
-//   })
-//   .catch((err) => {
-//       res.status(500).send(err);
-//   });
-// });
+app.post("/details", (req, res) => 
+{
+  OrderDetails.create(req.body).then(detail => {
+      res.json(detail);
+  })
+  .catch((err) => {
+      res.status(500).send(err);
+  });
+});
   
-// app.put("/details/:id", (req, res) => 
-// {
-//   OrderDetails.findByPk(req.params.id).then(detailId => {
-//     if (!detailId)
-//       res.status(404).send('Not found!');
-//     else
-//       detailId.update(req.body).then(detailId => {
-//         res.json(detailId);
-//       })
-//       .catch((err) => {
-//         res.status(500).send(err);
-//       });
-//   })
-//   .catch((err) => {
-//     res.status(500).send(err);
-//   });
-// });
+app.put("/details/:id", (req, res) => 
+{
+  OrderDetails.findByPk(req.params.id).then(detailId => {
+    if (!detailId)
+      res.status(404).send('Not found!');
+    else
+      detailId.update(req.body).then(detailId => {
+        res.json(detailId);
+      })
+      .catch((err) => {
+        res.status(500).send(err);
+      });
+  })
+  .catch((err) => {
+    res.status(500).send(err);
+  });
+});
   
-// app.delete("/details/:id", (req, res) => 
-// {
-//   OrderDetails.findByPk(req.params.id).then(detailId => {
-//     if (!detailId) 
-//       res.status(404).send('Not found!');
-//     else
-//       detailId.destroy().then(() => {
-//           res.json(detailId);
-//       })
-//       .catch((err) => {
-//           res.status(500).send(err);
-//       });
-//   })
-//   .catch((err) => {
-//       res.status(500).send(err);
-//   });
-// });
+app.delete("/details/:id", (req, res) => 
+{
+  OrderDetails.findByPk(req.params.id).then(detailId => {
+    if (!detailId) 
+      res.status(404).send('Not found!');
+    else
+      detailId.destroy().then(() => {
+          res.json(detailId);
+      })
+      .catch((err) => {
+          res.status(500).send(err);
+      });
+  })
+  .catch((err) => {
+      res.status(500).send(err);
+  });
+});
 
 
 
