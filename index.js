@@ -153,7 +153,7 @@ const Suppliers = sequelize.define("Suppliers", {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      is: /^[0-9]{10}$/i
+      is: /^[0-9]{9}$/i
     }
   },
 });
@@ -305,12 +305,12 @@ const Orders = sequelize.define("Orders", {
 
 const OrderDetails = sequelize.define("OrderDetails", {
   orderDetail_ID: {
-    type: Sequelize.STRING,
-    allowNull: false,
+    type: Sequelize.INTEGER,
+    defaultValue: this.autoincrement,
     primaryKey: true,
   },
   order_ID: {
-    type: Sequelize.STRING,
+    type: Sequelize.INTEGER,
     allowNull: false,
     references: {
       model: Orders,
@@ -318,7 +318,7 @@ const OrderDetails = sequelize.define("OrderDetails", {
     },
   },
   product_ID: {
-    type: Sequelize.STRING,
+    type: Sequelize.INTEGER,
     allowNull: false,
     references: {
       model: Products,
