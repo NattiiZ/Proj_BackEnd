@@ -600,7 +600,7 @@ app.get("/suppliers/:id", (req, res) =>
     if (!supplierId)
       res.status(404).send('Not found!');
     else 
-      res.json(suppliersId);
+      res.json(supplierId);
   });
 });
 
@@ -1069,9 +1069,6 @@ app.delete("/details/:id", (req, res) =>
       res.status(500).send(err);
   });
 });
-
-
-
 
 
 
