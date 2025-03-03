@@ -27,154 +27,160 @@ const sequelize = new Sequelize("database", "username", "password", {
 });
 
 
-// // =================== Users Table ===================
+// ================== UserType Table ==================
 
-// const Users = sequelize.define("Users", {
-//   user_ID: {
-//     type: Sequelize.INTEGER,
-//     defaultValue: this.autoincrement,
-//     get() {
-//       const value = this.getDataValue('user_ID');
-//       return value ? `U${String(value).padStart(3, '0')}` : value;
-//     },
-//     primaryKey: true,
-//   },
-//   username: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//   },
-//   password: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//   },
-//   joinDate: {
-//     type: Sequelize.DATE,
-//     defaultValue: Sequelize.NOW,
-//     get() {
-//       return new Date(this.getDataValue('joinDate')).toLocaleString("th-TH", { timeZone: "Asia/Bangkok" });
-//     },
-//     allowNull: false,
-//   },
-//   userType_ID: {
-//     type: Sequelize.INTEGER,
-//     allowNull: false,
-//   },
-// });
+const UserType = sequelize.define("UserType", {
+  userType_ID: {
+    type: Sequelize.INTEGER,
+    defaultValue: this.autoincrement,
+    primaryKey: true,
+  },
+  role: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
 
 
-// // ================== UserType Table ==================
+// =================== Users Table ===================
 
-// const UserType = sequelize.define("UserType", {
-//   userType_ID: {
-//     type: Sequelize.INTEGER,
-//     defaultValue: this.autoincrement,
-//     primaryKey: true,
-//   },
-//   role: {
-//     type: Sequelize.STRING,
-//     allowNull: false,
-//   },
-// });
-
-
-// ================= Customers Table =================
-
-const Customers = sequelize.define("Customers", {
-  customer_ID: {
+const Users = sequelize.define("Users", {
+  user_ID: {
     type: Sequelize.INTEGER,
     defaultValue: this.autoincrement,
     get() {
-      const value = this.getDataValue('customer_ID');
-      return value ? `C${String(value).padStart(3, '0')}` : value;
+      const value = this.getDataValue('user_ID');
+      return value ? `U${String(value).padStart(3, '0')}` : value;
     },
     primaryKey: true,
-    
   },
-  name: {
+  username: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  email: {
+  password: {
     type: Sequelize.STRING,
     allowNull: false,
-    validate: {
-      isEmail: true
+  },
+  joinDate: {
+    type: Sequelize.DATE,
+    defaultValue: Sequelize.NOW,
+    get() {
+      return new Date(this.getDataValue('joinDate')).toLocaleString("th-TH", { timeZone: "Asia/Bangkok" });
     },
+    // allowNull: false,
   },
-  phone: {
-    type: Sequelize.STRING,
+  userType_ID: {
+    type: Sequelize.INTEGER,
     allowNull: false,
-    validate: {
-      is: /^[0-9]{10}$/i
-    }
-  },
-  address: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  userID: {
     references: {
-      model: Users,
-      key: "userID",
-    }
-  },
-});
-
-
-// ================= Suppliers Table =================
-
-const Suppliers = sequelize.define("Suppliers", {
-  supplier_ID: {
-    type: Sequelize.INTEGER,
-    defaultValue: this.autoincrement,
-    // get() {
-    //   const value = this.getDataValue('supplier_ID');
-    //   return value ? `S${String(value).padStart(2, '0')}` : value;
-    // },
-    primaryKey: true,
-  },
-  name: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  email: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      isEmail: true
+      model: UserType,
+      key: "userType_ID",
     },
   },
-  phone: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      is: /^[0-9]{10}$/i
-    }
-  },
-  address: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
 });
 
 
-// ================= Category Table =================
+// // ================= Customers Table =================
 
-const Categories = sequelize.define("Categories", {
-  category_ID: {
-    type: Sequelize.INTEGER,
-    defaultValue: this.autoincrement,
-    // get() {
-    //   const value = this.getDataValue('category_ID');
-    //   return value ? `T${String(value).padStart(2, '0')}` : value;
-    // },
-    primaryKey: true,
-  },
-  name: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-});
+// const Customers = sequelize.define("Customers", {
+//   customer_ID: {
+//     type: Sequelize.INTEGER,
+//     defaultValue: this.autoincrement,
+//     get() {
+//       const value = this.getDataValue('customer_ID');
+//       return value ? `C${String(value).padStart(3, '0')}` : value;
+//     },
+//     primaryKey: true,
+    
+//   },
+//   name: {
+//     type: Sequelize.STRING,
+//     allowNull: false,
+//   },
+//   email: {
+//     type: Sequelize.STRING,
+//     allowNull: false,
+//     validate: {
+//       isEmail: true
+//     },
+//   },
+//   phone: {
+//     type: Sequelize.STRING,
+//     allowNull: false,
+//     validate: {
+//       is: /^[0-9]{10}$/i
+//     }
+//   },
+//   address: {
+//     type: Sequelize.STRING,
+//     allowNull: false,
+//   },
+//   user_ID: {
+//     type: Sequelize.INTEGER,
+//     allowNull: false,
+//     references: {
+//       model: Users,
+//       key: "userID",
+//     }
+//   },
+// });
+
+
+// // ================= Suppliers Table =================
+
+// const Suppliers = sequelize.define("Suppliers", {
+//   supplier_ID: {
+//     type: Sequelize.INTEGER,
+//     defaultValue: this.autoincrement,
+//     // get() {
+//     //   const value = this.getDataValue('supplier_ID');
+//     //   return value ? `S${String(value).padStart(2, '0')}` : value;
+//     // },
+//     primaryKey: true,
+//   },
+//   name: {
+//     type: Sequelize.STRING,
+//     allowNull: false,
+//   },
+//   email: {
+//     type: Sequelize.STRING,
+//     allowNull: false,
+//     validate: {
+//       isEmail: true
+//     },
+//   },
+//   phone: {
+//     type: Sequelize.STRING,
+//     allowNull: false,
+//     validate: {
+//       is: /^[0-9]{10}$/i
+//     }
+//   },
+//   address: {
+//     type: Sequelize.STRING,
+//     allowNull: false,
+//   },
+// });
+
+
+// // ================= Category Table =================
+
+// const Categories = sequelize.define("Categories", {
+//   category_ID: {
+//     type: Sequelize.INTEGER,
+//     defaultValue: this.autoincrement,
+//     // get() {
+//     //   const value = this.getDataValue('category_ID');
+//     //   return value ? `T${String(value).padStart(2, '0')}` : value;
+//     // },
+//     primaryKey: true,
+//   },
+//   name: {
+//     type: Sequelize.STRING,
+//     allowNull: false,
+//   },
+// });
 
 
 // // // ================= Products Table =================
@@ -329,75 +335,6 @@ sequelize.sync();
 // =========================================================================================================
 
 
-// ===================== Users =====================
-
-app.get("/users", (req, res) => 
-{
-  Users.findAll().then(users => {
-    res.json(users);
-  })
-  .catch((err) => {
-    res.status(500).send(err);
-  });
-});
- 
-app.get("/users/:id", (req, res) => 
-{
-  Users.findByPk(req.params.id).then(userId => {
-    if (!userId)
-      res.status(404).send('Not found!');
-    else 
-      res.json(userId);
-  });
-});
-
-app.post("/users", (req, res) => 
-{
-  Users.create(req.body).then(user => {
-    res.json(user);
-  })
-  .catch((err) => {
-    res.status(500).send(err);
-  });
-});
-  
-app.put("/users/:id", (req, res) => 
-{
-  Users.findByPk(req.params.id).then(userId => {
-    if (!userId)
-      res.status(404).send('Not found!');
-    else
-      userId.update(req.body).then(userId => {
-        res.json(userId);
-      })
-      .catch((err) => {
-        res.status(500).send(err);
-      });
-  })
-  .catch((err) => {
-    res.status(500).send(err);
-  });
-});
-  
-app.delete("/users/:id", (req, res) => 
-{
-  Users.findByPk(req.params.id).then(userId => {
-    if (!userId) 
-      res.status(404).send('Not found!');
-    else
-      userId.destroy().then(() => {
-        res.json(userId);
-      })
-      .catch((err) => {
-        res.status(500).send(err);
-      });
-  })
-  .catch((err) => {
-    res.status(500).send(err);
-  });
-});
-
-
 // ==================== UserType ====================
 
 app.get("/usertype", (req, res) => 
@@ -465,6 +402,75 @@ app.get("/usertype", (req, res) =>
       res.status(500).send(err);
     });
   });
+  
+  
+// ===================== Users =====================
+
+app.get("/users", (req, res) => 
+{
+  Users.findAll().then(users => {
+    res.json(users);
+  })
+  .catch((err) => {
+    res.status(500).send(err);
+  });
+});
+ 
+app.get("/users/:id", (req, res) => 
+{
+  Users.findByPk(req.params.id).then(userId => {
+    if (!userId)
+      res.status(404).send('Not found!');
+    else 
+      res.json(userId);
+  });
+});
+
+app.post("/users", (req, res) => 
+{
+  Users.create(req.body).then(user => {
+    res.json(user);
+  })
+  .catch((err) => {
+    res.status(500).send(err);
+  });
+});
+  
+app.put("/users/:id", (req, res) => 
+{
+  Users.findByPk(req.params.id).then(userId => {
+    if (!userId)
+      res.status(404).send('Not found!');
+    else
+      userId.update(req.body).then(userId => {
+        res.json(userId);
+      })
+      .catch((err) => {
+        res.status(500).send(err);
+      });
+  })
+  .catch((err) => {
+    res.status(500).send(err);
+  });
+});
+  
+app.delete("/users/:id", (req, res) => 
+{
+  Users.findByPk(req.params.id).then(userId => {
+    if (!userId) 
+      res.status(404).send('Not found!');
+    else
+      userId.destroy().then(() => {
+        res.json(userId);
+      })
+      .catch((err) => {
+        res.status(500).send(err);
+      });
+  })
+  .catch((err) => {
+    res.status(500).send(err);
+  });
+});
 
 
 // ==================== Customers ====================
