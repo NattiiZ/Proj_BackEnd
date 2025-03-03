@@ -32,7 +32,8 @@ const sequelize = new Sequelize("database", "username", "password", {
 const UserType = sequelize.define("UserType", {
   userType_ID: {
     type: Sequelize.INTEGER,
-    defaultValue: this.autoincrement,
+    // defaultValue: this.autoincrement,
+    autoincrement: true,
     primaryKey: true,
   },
   role: {
@@ -47,7 +48,8 @@ const UserType = sequelize.define("UserType", {
 const Users = sequelize.define("Users", {
   user_ID: {
     type: Sequelize.INTEGER,
-    defaultValue: this.autoincrement,
+    // defaultValue: this.autoincrement,
+    autoincrement: true,
     get() {
       const value = this.getDataValue('user_ID');
       return value ? `U${String(value).padStart(3, '0')}` : value;
@@ -85,10 +87,11 @@ const Users = sequelize.define("Users", {
 const Customers = sequelize.define("Customers", {
   customer_ID: {
     type: Sequelize.INTEGER,
-    defaultValue: this.autoincrement,
+    // defaultValue: this.autoincrement,
+    autoincrement: true,
     get() {
       const value = this.getDataValue('customer_ID');
-      return value ? `C${String(value).padStart(3, '0')}` : value;
+      return value ? `C-${String(value).padStart(4, '0')}` : value;
     },
     primaryKey: true,
     
@@ -131,10 +134,11 @@ const Customers = sequelize.define("Customers", {
 const Suppliers = sequelize.define("Suppliers", {
   supplier_ID: {
     type: Sequelize.INTEGER,
-    defaultValue: this.autoincrement,
+    // defaultValue: this.autoincrement,
+    autoincrement: true,
     // get() {
     //   const value = this.getDataValue('supplier_ID');
-    //   return value ? `S${String(value).padStart(2, '0')}` : value;
+    //   return value ? `S-${String(value).padStart(2, '0')}` : value;
     // },
     primaryKey: true,
   },
@@ -165,9 +169,10 @@ const Categories = sequelize.define("Categories", {
   category_ID: {
     type: Sequelize.INTEGER,
     defaultValue: this.autoincrement,
+    autoincrement: true,
     // get() {
     //   const value = this.getDataValue('category_ID');
-    //   return value ? `T${String(value).padStart(2, '0')}` : value;
+    //   return value ? `T-${String(value).padStart(2, '0')}` : value;
     // },
     primaryKey: true,
   },
@@ -183,10 +188,11 @@ const Categories = sequelize.define("Categories", {
 const Brands = sequelize.define("Brands", {
   brand_ID: {
     type: Sequelize.INTEGER,
-    defaultValue: this.autoincrement,
+    // defaultValue: this.autoincrement,
+    autoincrement: true,
     // get() {
     //   const value = this.getDataValue('brand_ID');
-    //   return value ? `B${String(value).padStart(2, '0')}` : value;
+    //   return value ? `B-${String(value).padStart(2, '0')}` : value;
     // },
     primaryKey: true,
   },
@@ -202,11 +208,12 @@ const Brands = sequelize.define("Brands", {
 const Products = sequelize.define("Products", {
   product_ID: {
     type: Sequelize.INTEGER,
-    defaultValue: this.autoincrement,
-    // get() {
-    //   const value = this.getDataValue('product_ID');
-    //   return value ? `P${String(value).padStart(3, '0')}` : value;
-    // },
+    // defaultValue: this.autoincrement,
+    autoincrement: true,
+    get() {
+      const value = this.getDataValue('product_ID');
+      return value ? `P-${String(value).padStart(3, '0')}` : value;
+    },
     primaryKey: true,
   },
   name: {
@@ -253,7 +260,8 @@ const Products = sequelize.define("Products", {
 const Status = sequelize.define("Status", {
   status_ID: {
     type: Sequelize.INTEGER,
-    defaultValue: this.autoincrement,
+    // defaultValue: this.autoincrement,
+    autoincrement: true,
     primaryKey: true,
   },
   statusName: {
@@ -268,7 +276,12 @@ const Status = sequelize.define("Status", {
 const Orders = sequelize.define("Orders", {
   order_ID: {
     type: Sequelize.INTEGER,
-    defaultValue: this.autoincrement,
+    // defaultValue: this.autoincrement,
+    autoincrement: true,
+    get() {
+      const value = this.getDataValue('order_ID');
+      return value ? `R-${String(value).padStart(4, '0')}` : value;
+    },
     primaryKey: true,
   },
   customer_ID: {
@@ -306,7 +319,12 @@ const Orders = sequelize.define("Orders", {
 const OrderDetails = sequelize.define("OrderDetails", {
   orderDetail_ID: {
     type: Sequelize.INTEGER,
-    defaultValue: this.autoincrement,
+    // defaultValue: this.autoincrement,
+    autoincrement: true,
+    // get() {
+    //   const value = this.getDataValue('orderDetail_ID');
+    //   return value ? `D-${String(value).padStart(4, '0')}` : value;
+    // },
     primaryKey: true,
   },
   order_ID: {
