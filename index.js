@@ -165,7 +165,7 @@ const Suppliers = sequelize.define("Suppliers", {
 
 // ================= Categories Table =================
 
-const Categories = sequelize.define("Categories", {
+const Category = sequelize.define("Category", {
   category_ID: {
     type: Sequelize.INTEGER,
     defaultValue: this.autoincrement,
@@ -232,7 +232,7 @@ const Products = sequelize.define("Products", {
     type: Sequelize.INTEGER,
     allowNull: false,
     references: {
-      model: Categories,
+      model: Category,
       key: "category_ID",
     },
   },
@@ -252,6 +252,14 @@ const Products = sequelize.define("Products", {
       key: "supplier_ID",
     },
   },
+  img_url: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  prductDetail:{
+    type: Sequelize.STRING,
+    allowNull: false
+  }
 });
 
 
@@ -673,7 +681,7 @@ app.delete("/suppliers/:id", (req, res) =>
 
 app.get("/category", (req, res) => 
 {
-  Categories.findAll().then(categories => {
+  Category.findAll().then(categories => {
     res.json(categories);
   })
   .catch((err) => {
@@ -683,7 +691,7 @@ app.get("/category", (req, res) =>
  
 app.get("/category/:id", (req, res) => 
 {
-  Categories.findByPk(req.params.id).then(categoryId => {
+  Category.findByPk(req.params.id).then(categoryId => {
     if (!categoryId)
       res.status(404).send('Not found!');
     else 
@@ -693,7 +701,7 @@ app.get("/category/:id", (req, res) =>
 
 app.post("/category", (req, res) => 
 {
-  Categories.create(req.body).then(category => {
+  Category.create(req.body).then(category => {
     res.json(category);
   })
   .catch((err) => {
@@ -703,7 +711,7 @@ app.post("/category", (req, res) =>
   
 app.put("/category/:id", (req, res) => 
 {
-  Categories.findByPk(req.params.id).then(categoryId => {
+  Category.findByPk(req.params.id).then(categoryId => {
     if (!categoryId)
       res.status(404).send('Not found!');
     else
@@ -721,7 +729,7 @@ app.put("/category/:id", (req, res) =>
   
 app.delete("/category/:id", (req, res) => 
 {
-  Categories.findByPk(req.params.id).then(categoryId => {
+  Category.findByPk(req.params.id).then(categoryId => {
     if (!categoryId)
       res.status(404).send('Not found!');
     else
