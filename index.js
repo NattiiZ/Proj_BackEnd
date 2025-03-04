@@ -48,7 +48,6 @@ const UserType = sequelize.define("UserType", {
 const Users = sequelize.define("Users", {
   user_ID: {
     type: Sequelize.INTEGER,
-    // defaultValue: this.autoincrement,
     autoincrement: true,
     get() {
       const value = this.getDataValue('user_ID');
@@ -87,7 +86,6 @@ const Users = sequelize.define("Users", {
 const Customers = sequelize.define("Customers", {
   customer_ID: {
     type: Sequelize.INTEGER,
-    // defaultValue: this.autoincrement,
     autoincrement: true,
     get() {
       const value = this.getDataValue('customer_ID');
@@ -134,12 +132,7 @@ const Customers = sequelize.define("Customers", {
 const Suppliers = sequelize.define("Suppliers", {
   supplier_ID: {
     type: Sequelize.INTEGER,
-    // defaultValue: this.autoincrement,
     autoincrement: true,
-    // get() {
-    //   const value = this.getDataValue('supplier_ID');
-    //   return value ? `S-${String(value).padStart(2, '0')}` : value;
-    // },
     primaryKey: true,
   },
   name: {
@@ -170,16 +163,16 @@ const Category = sequelize.define("Category", {
     type: Sequelize.INTEGER,
     defaultValue: this.autoincrement,
     autoincrement: true,
-    // get() {
-    //   const value = this.getDataValue('category_ID');
-    //   return value ? `T-${String(value).padStart(2, '0')}` : value;
-    // },
     primaryKey: true,
   },
   name: {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  description: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }
 });
 
 
@@ -188,12 +181,7 @@ const Category = sequelize.define("Category", {
 const Brands = sequelize.define("Brands", {
   brand_ID: {
     type: Sequelize.INTEGER,
-    // defaultValue: this.autoincrement,
     autoincrement: true,
-    // get() {
-    //   const value = this.getDataValue('brand_ID');
-    //   return value ? `B-${String(value).padStart(2, '0')}` : value;
-    // },
     primaryKey: true,
   },
   name: {
@@ -208,7 +196,6 @@ const Brands = sequelize.define("Brands", {
 const Products = sequelize.define("Products", {
   product_ID: {
     type: Sequelize.INTEGER,
-    // defaultValue: this.autoincrement,
     autoincrement: true,
     get() {
       const value = this.getDataValue('product_ID');
@@ -268,7 +255,6 @@ const Products = sequelize.define("Products", {
 const Status = sequelize.define("Status", {
   status_ID: {
     type: Sequelize.INTEGER,
-    // defaultValue: this.autoincrement,
     autoincrement: true,
     primaryKey: true,
   },
@@ -284,7 +270,6 @@ const Status = sequelize.define("Status", {
 const Orders = sequelize.define("Orders", {
   order_ID: {
     type: Sequelize.INTEGER,
-    // defaultValue: this.autoincrement,
     autoincrement: true,
     get() {
       const value = this.getDataValue('order_ID');
@@ -327,12 +312,7 @@ const Orders = sequelize.define("Orders", {
 const OrderDetails = sequelize.define("OrderDetails", {
   orderDetail_ID: {
     type: Sequelize.INTEGER,
-    // defaultValue: this.autoincrement,
     autoincrement: true,
-    // get() {
-    //   const value = this.getDataValue('orderDetail_ID');
-    //   return value ? `D-${String(value).padStart(4, '0')}` : value;
-    // },
     primaryKey: true,
   },
   order_ID: {
@@ -364,29 +344,6 @@ const OrderDetails = sequelize.define("OrderDetails", {
     allowNull: false,
   },
 });
-
-
-// // ================== Relationships ==================
-
-// // ความสัมพันธ์ระหว่าง Customers และ Orders
-// Customers.hasMany(Orders, { foreignKey: "customer_ID" });
-// Orders.belongsTo(Customers, { foreignKey: "customer_ID" });
-
-// // ความสัมพันธ์ระหว่าง Orders และ OrderDetail
-// Orders.hasMany(OrderDetails, { foreignKey: "order_ID" });
-// OrderDetails.belongsTo(Orders, { foreignKey: "order_ID" });
-
-// // ความสัมพันธ์ระหว่าง Products และ Category
-// Products.belongsTo(Category, { foreignKey: "category_ID" });
-// Category.hasMany(Products, { foreignKey: "category_ID" });
-
-// // ความสัมพันธ์ระหว่าง Products และ Suppliers
-// Products.belongsTo(Suppliers, { foreignKey: "supplier_ID" });
-// Suppliers.hasMany(Products, { foreignKey: "supplier_ID" });
-
-// // ความสัมพันธ์ระหว่าง OrderDetails และ Products
-// OrderDetails.belongsTo(Products, { foreignKey: "product_ID" });
-// Products.hasMany(OrderDetails, { foreignKey: "product_ID" });
 
 
 // ================== Database Sync ==================
