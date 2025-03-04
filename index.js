@@ -8,6 +8,15 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 const Sequelize = require("sequelize");
+const bcrypt = require('bcrypt');
+const session = require('express-session');
+
+app.use(session({
+  secret: process.env.SESSION_SECRET || '',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false } // true ถ้าใช้ https
+}));
 
 
 
@@ -20,16 +29,20 @@ const Sequelize = require("sequelize");
 
 // =============== Database Connection ===============
 
-const sequelize = new Sequelize("database", "username", "password", {
-  host: "localhost",
-  dialect: "sqlite",
-  storage: "./Database/Store.sqlite",
+const { DB_NAME, DB_USERNAME, DB_PASSWORD, DB_HOST, DB_DIALECT, DB_STORAGE } = process.env;
+
+const sequelize = new Sequelize( DB_NAME, DB_USERNAME, DB_PASSWORD, 
+{
+  host: DB_HOST,
+  dialect: DB_DIALECT,
+  storage: DB_STORAGE,
 });
 
 
 // ================== UserType Table ==================
 
-const UserType = sequelize.define("UserType", {
+const UserType = sequelize.define("UserType", 
+{
   userType_ID: {
     type: Sequelize.INTEGER,
     // defaultValue: this.autoincrement,
@@ -45,7 +58,8 @@ const UserType = sequelize.define("UserType", {
 
 // =================== Users Table ===================
 
-const Users = sequelize.define("Users", {
+const Users = sequelize.define("Users", 
+{
   user_ID: {
     type: Sequelize.INTEGER,
     autoincrement: true,
@@ -83,7 +97,8 @@ const Users = sequelize.define("Users", {
 
 // ================= Customers Table =================
 
-const Customers = sequelize.define("Customers", {
+const Customers = sequelize.define("Customers", 
+{
   customer_ID: {
     type: Sequelize.INTEGER,
     autoincrement: true,
@@ -129,7 +144,8 @@ const Customers = sequelize.define("Customers", {
 
 // ================= Suppliers Table =================
 
-const Suppliers = sequelize.define("Suppliers", {
+const Suppliers = sequelize.define("Suppliers", 
+{
   supplier_ID: {
     type: Sequelize.INTEGER,
     autoincrement: true,
@@ -158,7 +174,8 @@ const Suppliers = sequelize.define("Suppliers", {
 
 // ================= Categories Table =================
 
-const Category = sequelize.define("Category", {
+const Category = sequelize.define("Category", 
+{
   category_ID: {
     type: Sequelize.INTEGER,
     defaultValue: this.autoincrement,
@@ -178,7 +195,8 @@ const Category = sequelize.define("Category", {
 
 // ================= Brands Table =================
 
-const Brands = sequelize.define("Brands", {
+const Brands = sequelize.define("Brands", 
+{
   brand_ID: {
     type: Sequelize.INTEGER,
     autoincrement: true,
@@ -193,7 +211,8 @@ const Brands = sequelize.define("Brands", {
 
 // // ================= Products Table =================
 
-const Products = sequelize.define("Products", {
+const Products = sequelize.define("Products", 
+{
   product_ID: {
     type: Sequelize.INTEGER,
     autoincrement: true,
@@ -252,7 +271,8 @@ const Products = sequelize.define("Products", {
 
 // ================= Status Table =================
 
-const Status = sequelize.define("Status", {
+const Status = sequelize.define("Status", 
+{
   status_ID: {
     type: Sequelize.INTEGER,
     autoincrement: true,
@@ -267,7 +287,8 @@ const Status = sequelize.define("Status", {
 
 // ================= Orders Table =================
 
-const Orders = sequelize.define("Orders", {
+const Orders = sequelize.define("Orders", 
+{
   order_ID: {
     type: Sequelize.INTEGER,
     autoincrement: true,
@@ -309,7 +330,8 @@ const Orders = sequelize.define("Orders", {
 
 // ============== OrdersDetail Table ==============
 
-const OrderDetails = sequelize.define("OrderDetails", {
+const OrderDetails = sequelize.define("OrderDetails", 
+{
   orderDetail_ID: {
     type: Sequelize.INTEGER,
     autoincrement: true,
@@ -384,70 +406,70 @@ sequelize.sync();
 // ==================== UserType ====================
 
 app.get("/usertype", (req, res) => 
-  {
-    UserType.findAll().then(userType => {
-      res.json(userType);
-    })
-    .catch((err) => {
-      res.status(500).send(err);
-    });
+{
+  UserType.findAll().then(userType => {
+    res.json(userType);
+  })
+  .catch((err) => {
+    res.status(500).send(err);
   });
-   
-  app.get("/usertype/:id", (req, res) => 
-  {
-    UserType.findByPk(req.params.id).then(typeId => {
-      if (!typeId)
-        res.status(404).send('Not found!');
-      else 
-        res.json(typeId);
-    });
-  });
+});
   
-  app.post("/usertype", (req, res) => 
-  {
-    UserType.create(req.body).then(userType => {
-      res.json(userType);
-    })
-    .catch((err) => {
-      res.status(500).send(err);
-    });
+app.get("/usertype/:id", (req, res) => 
+{
+  UserType.findByPk(req.params.id).then(typeId => {
+    if (!typeId)
+      res.status(404).send('Not found!');
+    else 
+      res.json(typeId);
   });
-    
-  app.put("/usertype/:id", (req, res) => 
-  {
-    UserType.findByPk(req.params.id).then(typeId => {
-      if (!typeId)
-        res.status(404).send('Not found!');
-      else
-        typeId.update(req.body).then(typeId => {
-          res.json(typeId);
-        })
-        .catch((err) => {
-          res.status(500).send(err);
-        });
-    })
-    .catch((err) => {
-      res.status(500).send(err);
-    });
+});
+
+app.post("/usertype", (req, res) => 
+{
+  UserType.create(req.body).then(userType => {
+    res.json(userType);
+  })
+  .catch((err) => {
+    res.status(500).send(err);
   });
-    
-  app.delete("/usertype/:id", (req, res) => 
-  {
-    UserType.findByPk(req.params.id).then(typeId => {
-      if (!typeId) 
-        res.status(404).send('Not found!');
-      else
-        typeId.destroy().then(() => {
-          res.json(typeId);
-        })
-        .catch((err) => {
-          res.status(500).send(err);
-        });
-    })
-    .catch((err) => {
-      res.status(500).send(err);
-    });
+});
+  
+app.put("/usertype/:id", (req, res) => 
+{
+  UserType.findByPk(req.params.id).then(typeId => {
+    if (!typeId)
+      res.status(404).send('Not found!');
+    else
+      typeId.update(req.body).then(typeId => {
+        res.json(typeId);
+      })
+      .catch((err) => {
+        res.status(500).send(err);
+      });
+  })
+  .catch((err) => {
+    res.status(500).send(err);
   });
+});
+  
+app.delete("/usertype/:id", (req, res) => 
+{
+  UserType.findByPk(req.params.id).then(typeId => {
+    if (!typeId) 
+      res.status(404).send('Not found!');
+    else
+      typeId.destroy().then(() => {
+        res.json(typeId);
+      })
+      .catch((err) => {
+        res.status(500).send(err);
+      });
+  })
+  .catch((err) => {
+    res.status(500).send(err);
+  });
+});
   
   
 // ===================== Users =====================
@@ -481,7 +503,7 @@ app.post("/users", (req, res) =>
     res.status(500).send(err);
   });
 });
-  
+
 app.put("/users/:id", (req, res) => 
 {
   Users.findByPk(req.params.id).then(userId => {
@@ -1083,8 +1105,8 @@ app.delete("/details/:id", (req, res) =>
 // -------------------------------------------- Server Connection ------------------------------------------
 // =========================================================================================================
 
-const port = process.env.PORT || 3000;
+const server_port = process.env.SERVER_PORT || 3000;
 
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+app.listen(server_port, () => {
+  console.log(`Server listening at http://localhost:${server_port}`);
 });
