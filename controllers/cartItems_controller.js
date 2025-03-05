@@ -38,7 +38,8 @@ exports.getCartItemById = async (req, res) =>
       return res.status(404).json({ error: "Product not found" });
 
     res.status(200).json(cartItem);
-  } catch (error) {
+  } 
+  catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
