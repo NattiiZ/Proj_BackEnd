@@ -23,6 +23,13 @@ const Users = DB.define("Users",
     type: DataTypes.STRING,
     allowNull: false,
   },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      isEmail: true
+    },
+  },
   joinDate: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
