@@ -29,7 +29,7 @@ exports.getOrders = async (req, res) =>
 exports.updateOrder = async (req, res) => 
 {
   try {
-    const id = req.params;
+    const { id } = req.params;
     const { customer_ID, totalAmount, status_ID } = req.body;
     const order = await Orders.findByPk(id);
     
@@ -53,7 +53,7 @@ exports.updateOrder = async (req, res) =>
 exports.deleteOrder = async (req, res) => 
 {
   try {
-    const id = req.params;
+    const { id } = req.params;
     const order = await Orders.findByPk(id);
     
     if (order) {

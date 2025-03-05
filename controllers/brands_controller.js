@@ -4,7 +4,8 @@ const { Brands } = require('../models');
 exports.createBrand = async (req, res) => 
 {
   try {
-    const name = req.body;
+    const { name } = req.body;
+
     const brand = await Brands.create({ name });
 
     res.status(201).json(brand);
@@ -26,22 +27,36 @@ exports.getBrands = async (req, res) =>
   }
 };
 
+exports.getBrandById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const brands = await Brands.findByPk(id);
+
+    if (!brands) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    res.status(200).json(brands);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 exports.updateBrand = async (req, res) => 
 {
   try {
-    const id = req.params;
-    const name = req.body;
+    const { id } = req.params;
+    const data = req.body;
+
     const brand = await Brands.findByPk(id);
 
-    if (brand) {
-      brand.name = name;
-      
-      await brand.save();
-      
-      res.status(200).json(brand);
-    } 
-    else
+    if (!brand)
       res.status(404).json({ error: 'Brand not found' });
+      
+    await brand.update(data);
+      
+    res.status(200).json(brand);
   } 
   catch (error) {
     res.status(400).json({ error: error.message });
@@ -51,16 +66,16 @@ exports.updateBrand = async (req, res) =>
 exports.deleteBrand = async (req, res) => 
 {
   try {
-    const id = req.params;
+    const { id } = req.params;
+
     const brand = await Brands.findByPk(id);
 
-    if (brand) {
-      await brand.destroy();
-
-      res.status(204).json();
-    } 
-    else
+    if (!brand)
       res.status(404).json({ error: 'Brand not found' });
+
+    await brand.destroy();
+
+    res.status(204).json();
   } 
   catch (error) {
     res.status(400).json({ error: error.message });

@@ -29,7 +29,7 @@ exports.getCustomers = async (req, res) =>
 exports.updateCustomer = async (req, res) => 
 {
   try {
-    const id = req.params;
+    const { id } = req.params;
     const { name, email, phone, address, user_ID } = req.body;
     const customer = await Customers.findByPk(id);
 
@@ -55,7 +55,7 @@ exports.updateCustomer = async (req, res) =>
 exports.deleteCustomer = async (req, res) => 
 {
   try {
-    const id = req.params;
+    const { id } = req.params;
     const customer = await Customers.findByPk(id);
     
     if (customer) {

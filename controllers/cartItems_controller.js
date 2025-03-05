@@ -5,6 +5,7 @@ exports.addCartItem = async (req, res) =>
 {
   try {
     const { cart_ID, product_ID, quantity } = req.body;
+    
     const cartItem = await CartItems.create({ cart_ID, product_ID, quantity });
 
     res.status(201).json(cartItem);
@@ -26,11 +27,28 @@ exports.getCartItems = async (req, res) =>
   }
 };
 
+exports.getCartById = async (req, res) => 
+{
+  try {
+    const { id } = req.params;
+
+    const cart = await Cart.findByPk(id);
+
+    if (!cart)
+      return res.status(404).json({ error: "Product not found" });
+
+    res.status(200).json(cart);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 exports.updateCartItem = async (req, res) => 
 {
   try {
-    const id = req.params;
+    const { id } = req.params;
     const quantity = req.body;
+
     const cartItem = await CartItems.findByPk(id);
 
     if (cartItem) {
@@ -51,7 +69,7 @@ exports.updateCartItem = async (req, res) =>
 exports.deleteCartItem = async (req, res) => 
 {
   try {
-    const id = req.params;
+    const { id } = req.params;
     const cartItem = await CartItems.findByPk(id);
 
     if (cartItem) {

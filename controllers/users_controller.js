@@ -29,7 +29,7 @@ exports.getUsers = async (req, res) =>
 exports.updateUser = async (req, res) => 
 {
   try {
-    const id = req.params;
+    const { id } = req.params;
     const { username, password, userType_ID } = req.body;
     const user = await Users.findByPk(id);
     
@@ -53,7 +53,7 @@ exports.updateUser = async (req, res) =>
 exports.deleteUser = async (req, res) => 
 {
   try {
-    const id = req.params;
+    const { id } = req.params;
     const user = await Users.findByPk(id);
     
     if (user) {

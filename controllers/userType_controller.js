@@ -29,8 +29,8 @@ exports.getUserTypes = async (req, res) =>
 exports.updateUserType = async (req, res) => 
 {
   try {
-    const id = req.params;
-    const role = req.body;
+    const { id } = req.params;
+    const { role } = req.body;
     const userType = await UserType.findByPk(id);
 
     if (userType) {
@@ -51,7 +51,7 @@ exports.updateUserType = async (req, res) =>
 exports.deleteUserType = async (req, res) => 
 {
   try {
-    const id = req.params;
+    const { id } = req.params;
     const userType = await UserType.findByPk(id);
     
     if (userType) {

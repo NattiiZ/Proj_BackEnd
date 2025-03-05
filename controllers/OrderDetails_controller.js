@@ -35,7 +35,7 @@ exports.getOrderDetails = async (req, res) =>
 exports.updateOrderDetail = async (req, res) => 
 {
   try {
-    const id = req.params;
+    const { id } = req.params;
     const { quantity, unitPrice, subtotal } = req.body;
     const orderDetail = await OrderDetails.findByPk(id);
 

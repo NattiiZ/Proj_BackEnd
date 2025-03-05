@@ -29,8 +29,8 @@ exports.getStatuses = async (req, res) =>
 exports.updateStatus = async (req, res) => 
 {
   try {
-    const id = req.params;
-    const statusName = req.body;
+    const { id } = req.params;
+    const { statusName } = req.body;
     const status = await Status.findByPk(id);
     
     if (status) {

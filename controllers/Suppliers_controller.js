@@ -29,7 +29,7 @@ exports.getSuppliers = async (req, res) =>
 exports.updateSupplier = async (req, res) => 
 {
   try {
-    const id = req.params;
+    const { id } = req.params;
     const { name, email, phone } = req.body;
     const supplier = await Suppliers.findByPk(id);
     
@@ -53,7 +53,7 @@ exports.updateSupplier = async (req, res) =>
 exports.deleteSupplier = async (req, res) => 
 {
   try {
-    const id = req.params;
+    const { id } = req.params;
     const supplier = await Suppliers.findByPk(id);
     
     if (supplier) {

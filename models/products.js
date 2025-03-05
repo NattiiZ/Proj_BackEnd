@@ -57,7 +57,7 @@ const Products = DB.define("Products",
     type: DataTypes.STRING,
     allowNull: false
   },
-  prductDetail:{
+  detail:{
     type: DataTypes.STRING,
     allowNull: false
   }
