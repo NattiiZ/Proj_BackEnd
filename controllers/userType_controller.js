@@ -1,4 +1,4 @@
-const UserType = require("../models");
+const { UserType } = require("../models");
 
 
 exports.createUserType = async (req, res) => 

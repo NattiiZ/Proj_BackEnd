@@ -1,4 +1,5 @@
 const DataTypes = require('sequelize');
+
 const DB = require('../config/database');
 
 

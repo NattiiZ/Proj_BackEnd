@@ -1,5 +1,7 @@
 const DataTypes = require('sequelize');
+
 const DB = require('../config/database');
+const Users = require('./Users');
 
 
 const Customers = DB.define("Customers", 
