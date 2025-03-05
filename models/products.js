@@ -1,10 +1,11 @@
-const Sequelize = require('../config/database');
+const DataTypes = require('sequelize');
+const DB = require('../config/database');
 
 
-const Products = Sequelize.define("Products", 
+const Products = DB.define("Products", 
 {
   product_ID: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     autoincrement: true,
     get() {
       const value = this.getDataValue('product_ID');
@@ -13,11 +14,11 @@ const Products = Sequelize.define("Products",
     primaryKey: true,
   },
   name: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   brand_ID: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     references: {
       model: Brands,
@@ -25,7 +26,7 @@ const Products = Sequelize.define("Products",
     },
   },
   category_ID: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
     references: {
       model: Category,
@@ -33,15 +34,15 @@ const Products = Sequelize.define("Products",
     },
   },
   unitPrice: {
-    type: Sequelize.FLOAT,
+    type: DataTypes.FLOAT,
     allowNull: false,
   },
   stockQty: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   supplier_ID: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
     references: {
       model: Suppliers,
@@ -49,11 +50,11 @@ const Products = Sequelize.define("Products",
     },
   },
   img_url: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   prductDetail:{
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false
   }
 });

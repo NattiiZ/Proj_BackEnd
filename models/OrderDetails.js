@@ -1,15 +1,16 @@
-const Sequelize = require('../config/database');
+const DataTypes = require('sequelize');
+const DB = require('../config/database');
 
 
-const OrderDetails = Sequelize.define("OrderDetails", 
+const OrderDetails = DB.define("OrderDetails", 
 {
   orderDetail_ID: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     autoincrement: true,
     primaryKey: true,
   },
   order_ID: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
     references: {
       model: Orders,
@@ -17,7 +18,7 @@ const OrderDetails = Sequelize.define("OrderDetails",
     },
   },
   product_ID: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
     references: {
       model: Products,
@@ -25,15 +26,15 @@ const OrderDetails = Sequelize.define("OrderDetails",
     },
   },
   quantity: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   unitPrice: {
-    type: Sequelize.FLOAT,
+    type: DataTypes.FLOAT,
     allowNull: false,
   },
   subtotal: {
-    type: Sequelize.FLOAT,
+    type: DataTypes.FLOAT,
     allowNull: false,
   },
 });

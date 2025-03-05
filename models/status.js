@@ -1,15 +1,16 @@
-const Sequelize = require('../config/database');
+const DataTypes = require('sequelize');
+const DB = require('../config/database');
 
 
-const Status = Sequelize.define("Status", 
+const Status = DB.define("Status", 
 {
   status_ID: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     autoincrement: true,
     primaryKey: true,
   },
   statusName: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
   }
 });

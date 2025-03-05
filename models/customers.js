@@ -1,10 +1,11 @@
-const Sequelize = require('../config/database');
+const DataTypes = require('sequelize');
+const DB = require('../config/database');
 
 
-const Customers = Sequelize.define("Customers", 
+const Customers = DB.define("Customers", 
 {
   customer_ID: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     autoincrement: true,
     get() {
       const value = this.getDataValue('customer_ID');
@@ -14,29 +15,29 @@ const Customers = Sequelize.define("Customers",
     
   },
   name: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   email: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     validate: {
       isEmail: true
     },
   },
   phone: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     validate: {
       is: /^[0-9]{10}$/i
     }
   },
   address: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   user_ID: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
     references: {
       model: Users,

@@ -1,15 +1,16 @@
-const Sequelize = require('../config/database');
+const DataTypes = require('sequelize');
+const DB = require('../config/database');
 
 
-const CartItems = Sequelize.define("CartItems",
+const CartItems = DB.define("CartItems",
 {
   cartItem_ID: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
   cart_ID: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
     references: {
       model: Cart,
@@ -17,7 +18,7 @@ const CartItems = Sequelize.define("CartItems",
     },
   },
   product_ID: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
     references: {
       model: Products,
@@ -25,7 +26,7 @@ const CartItems = Sequelize.define("CartItems",
     },
   },
   quantity: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: 1,
   },

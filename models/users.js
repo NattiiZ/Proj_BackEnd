@@ -1,10 +1,11 @@
-const Sequelize = require('../config/database');
+const DataTypes = require('sequelize');
+const DB = require('../config/database');
 
 
-const Users = Sequelize.define("Users", 
+const Users = DB.define("Users", 
 {
   user_ID: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     autoincrement: true,
     get() {
       const value = this.getDataValue('user_ID');
@@ -13,22 +14,22 @@ const Users = Sequelize.define("Users",
     primaryKey: true,
   },
   username: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   password: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   joinDate: {
-    type: Sequelize.DATE,
-    defaultValue: Sequelize.NOW,
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
     get() {
       return new Date(this.getDataValue('joinDate')).toLocaleString("th-TH", { timeZone: "Asia/Bangkok" });
     },
   },
   userType_ID: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
     references: {
       model: UserType,
