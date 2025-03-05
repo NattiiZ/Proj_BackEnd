@@ -27,17 +27,17 @@ exports.getCartItems = async (req, res) =>
   }
 };
 
-exports.getCartById = async (req, res) => 
+exports.getCartItemById = async (req, res) => 
 {
   try {
     const { id } = req.params;
 
-    const cart = await Cart.findByPk(id);
+    const cartItem = await Cart.findByPk(id);
 
-    if (!cart)
+    if (!cartItem)
       return res.status(404).json({ error: "Product not found" });
 
-    res.status(200).json(cart);
+    res.status(200).json(cartItem);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -47,19 +47,16 @@ exports.updateCartItem = async (req, res) =>
 {
   try {
     const { id } = req.params;
-    const quantity = req.body;
+    const items = req.body;
 
     const cartItem = await CartItems.findByPk(id);
 
-    if (cartItem) {
-      cartItem.quantity = quantity;
+    if (!cartItem) 
+      res.status(404).json({ error: "Cart item not found" });
       
-      await cartItem.save();
+      await cartItem.update(items);
 
       res.status(200).json(cartItem);
-    } 
-    else 
-      res.status(404).json({ error: "Cart item not found" });
   } 
   catch (error) {
     res.status(400).json({ error: error.message });
@@ -70,15 +67,15 @@ exports.deleteCartItem = async (req, res) =>
 {
   try {
     const { id } = req.params;
+
     const cartItem = await CartItems.findByPk(id);
 
-    if (cartItem) {
-      await cartItem.destroy();
-
-      res.status(204).json();
-    } 
-    else 
+    if (!cartItem)
       res.status(404).json({ error: "Cart item not found" });
+
+    await cartItem.destroy();
+
+    res.status(204).json();
   } 
   catch (error) {
     res.status(400).json({ error: error.message });
