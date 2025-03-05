@@ -1,10 +1,11 @@
 const Sequelize = require('../config/database');
 
 
-const Brands = Sequelize.define("Brands", 
+const Category = Sequelize.define("Category", 
 {
-  brand_ID: {
+  category_ID: {
     type: Sequelize.INTEGER,
+    defaultValue: this.autoincrement,
     autoincrement: true,
     primaryKey: true,
   },
@@ -12,7 +13,11 @@ const Brands = Sequelize.define("Brands",
     type: Sequelize.STRING,
     allowNull: false,
   },
+  description: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }
 });
 
 
-module.exports = Brands;
+module.exports = Category;
