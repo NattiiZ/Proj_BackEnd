@@ -11,10 +11,10 @@ const Products = DB.define("Products",
   product_ID: {
     type: DataTypes.INTEGER,
     autoincrement: true,
-    get() {
-      const value = this.getDataValue('product_ID');
-      return value ? `P-${String(value).padStart(3, '0')}` : value;
-    },
+    // get() {
+    //   const value = this.getDataValue('product_ID');
+    //   return value ? `P-${String(value).padStart(3, '0')}` : value;
+    // },
     primaryKey: true,
   },
   name: {

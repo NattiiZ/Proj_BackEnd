@@ -10,10 +10,10 @@ const Orders = DB.define("Orders",
   order_ID: {
     type: DataTypes.INTEGER,
     autoincrement: true,
-    get() {
-      const value = this.getDataValue('order_ID');
-      return value ? `R-${String(value).padStart(4, '0')}` : value;
-    },
+    // get() {
+    //   const value = this.getDataValue('order_ID');
+    //   return value ? `R-${String(value).padStart(4, '0')}` : value;
+    // },
     primaryKey: true,
   },
   customer_ID: {

@@ -1,4 +1,4 @@
-const { Orders } = require("../models/Orders");
+const { Orders } = require("../models");
 
 
 exports.createOrder = async (req, res) => 
@@ -15,16 +15,16 @@ exports.createOrder = async (req, res) =>
 };
 
 exports.getOrders = async (req, res) => 
-{
-  try {
-    const orders = await Orders.findAll();
-
-    res.status(200).json(orders);
-  } 
-  catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
+  {
+    try {
+      const oders = await Orders.findAll();
+  
+      res.status(200).json(oders);
+    } 
+    catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  };
 
 exports.getOrderById = async (req, res) => 
 {

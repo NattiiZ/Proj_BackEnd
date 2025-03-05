@@ -7,7 +7,6 @@ const UserType = DB.define("UserType",
 {
   userType_ID: {
     type: DataTypes.INTEGER,
-    // defaultValue: this.autoincrement,
     autoincrement: true,
     primaryKey: true,
   },
