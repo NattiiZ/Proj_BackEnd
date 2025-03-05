@@ -269,6 +269,59 @@ const Products = sequelize.define("Products",
 });
 
 
+// ================= Cart Table =================
+
+const Cart = sequelize.define("Cart", 
+{
+  cart_ID: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  user_ID: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: {
+      model: Users,
+      key: "user_ID",
+    },
+  }
+});
+
+
+// ================= Status Table =================
+
+const CartItems = sequelize.define("CartItems",
+{
+  cartItem_ID: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  cart_ID: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: {
+      model: Cart,
+      key: "cart_ID",
+    },
+  },
+  product_ID: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: {
+      model: Products,
+      key: "product_ID",
+    },
+  },
+  quantity: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 1,
+  },
+});
+
+
 // ================= Status Table =================
 
 const Status = sequelize.define("Status", 
