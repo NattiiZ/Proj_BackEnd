@@ -26,24 +26,37 @@ exports.getUsers = async (req, res) =>
   }
 };
 
+exports.getUserById = async (req, res) => 
+{
+  try {
+    const { id } = req.params;
+
+    const user = await Users.findByPk(id);
+
+    if (!user)
+      return res.status(404).json({ error: "User not found" });
+
+    res.status(200).json(user);
+  } 
+  catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 exports.updateUser = async (req, res) => 
 {
   try {
     const { id } = req.params;
-    const { username, password, userType_ID } = req.body;
+    const data = req.body;
+
     const user = await Users.findByPk(id);
     
-    if (user) {
-      user.username = username;
-      user.password = password;
-      user.userType_ID = userType_ID;
-    
-      await user.save();
-    
-      res.status(200).json(user);
-    } 
-    else
+    if (!user)
       res.status(404).json({ error: "User not found" });
+
+    await user.update(data);
+  
+    res.status(200).json(user);
   } 
   catch (error) {
     res.status(400).json({ error: error.message });
@@ -56,13 +69,12 @@ exports.deleteUser = async (req, res) =>
     const { id } = req.params;
     const user = await Users.findByPk(id);
     
-    if (user) {
-      await user.destroy();
-    
-      res.status(204).json();
-    } 
-    else
+    if (!user)
       res.status(404).json({ error: "User not found" });
+
+    await user.destroy();
+  
+    res.status(204).json();
   } 
   catch (error) {
     res.status(400).json({ error: error.message });

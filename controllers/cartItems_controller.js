@@ -35,7 +35,7 @@ exports.getCartItemById = async (req, res) =>
     const cartItem = await Cart.findByPk(id);
 
     if (!cartItem)
-      return res.status(404).json({ error: "Product not found" });
+      return res.status(404).json({ error: "Cart item not found" });
 
     res.status(200).json(cartItem);
   } 

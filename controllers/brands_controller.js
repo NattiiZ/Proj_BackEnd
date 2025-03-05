@@ -34,7 +34,7 @@ exports.getBrandById = async (req, res) => {
     const brands = await Brands.findByPk(id);
 
     if (!brands) {
-      return res.status(404).json({ error: "Product not found" });
+      return res.status(404).json({ error: "Brand not found" });
     }
 
     res.status(200).json(brands);
