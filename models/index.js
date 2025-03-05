@@ -3,15 +3,15 @@ const DB = require('../config/database');
 const UserType = require('./UserType');
 const Users = require('./Users');
 const Customers = require('./Customers');
-const Suppliers = require('./Products');
-const Category = require('./Order');
-const Brands = require('./Order');
-const Products = require('./Order');
-const Cart = require('./Order');
-const CartItems = require('./Order');
-const Status = require('./Order');
-const Orders = require('./Order');
-const OrderDetails = require('./Order');
+const Suppliers = require('./Suppliers');
+const Category = require('./Category');
+const Brands = require('./Brands');
+const Products = require('./Products');
+const Cart = require('./Cart');
+const CartItems = require('./CartItems');
+const Status = require('./Status');
+const Orders = require('./Orders');
+const OrderDetails = require('./OrderDetails');
 
 
 
@@ -41,9 +41,17 @@ const OrderDetails = require('./Order');
 
 
 module.exports = {
-  sequelize,
-  User,
+  DB,
+  UserType,
+  Users,
+  Customers,
+  Suppliers,
+  Category,
+  Brands,
+  Products,
   Cart,
-  Product,
-  Order,
+  CartItems,
+  Status,
+  Orders,
+  OrderDetails
 };
