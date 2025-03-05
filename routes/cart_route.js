@@ -1,21 +1,12 @@
-const { Cart, CartItem, Product } = require('../models');
+const express = require('express');
+const router = express.Router();
+const Cart_Controller = require('../controllers/Cart_controller');
 
-exports.addToCart = async (req, res) => 
-{
-  try {
-    const { user_ID, product_ID, quantity } = req.body;
 
-    let cart = await Cart.findOne({ where: { user_ID } });
-    if (!cart) {
-      cart = await Cart.create({ user_ID });
-    }
+router.post('/', Cart_Controller.createCart);
+router.get('/', Cart_Controller.getCarts);
+router.put('/:id', Cart_Controller.updateCart);
+router.delete('/:id', Cart_Controller.deleteCart);
 
-    await CartItem.create({ cart_ID: cart.cart_ID, product_ID, quantity });
-    res.status(200).json({ message: 'เพิ่มสินค้าในตะกร้าสำเร็จ' });
 
-  } 
-  catch (err) {
-    console.error(err);
-    res.status(500).send('เกิดข้อผิดพลาด');
-  }
-};
+module.exports = router;
