@@ -1,8 +1,10 @@
-require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
 
+require("dotenv").config();
+
 const DB = require("./models").DB;
+
 const UserType_Route = require('./routes/UserType_route');
 const Users_Route = require('./routes/Users_route');
 const Customers_Route = require('./routes/Customers_route');
@@ -16,10 +18,13 @@ const Status_Route = require('./routes/Status_route');
 const OrderDetails_Route = require('./routes/OrderDetails_route');
 const Orders_Route = require('./routes/Orders_route');
 
+
 const port = process.env.SERVER_PORT || 3000;
 
 const app = express();
 app.use(express.json());
+
+
 
 
 app.use('/cart-item', CartItems_Route);
@@ -34,6 +39,8 @@ app.use('/status', Status_Route);
 app.use('/supplier', Suppliers_Route);
 app.use('/user', Users_Route);
 app.use('/user-type', UserType_Route);
+
+
 
 
 DB.sync().then(() => 

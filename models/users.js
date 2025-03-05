@@ -32,7 +32,7 @@ const Users = DB.define("Users",
   },
   userType_ID: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    defaultValue: 2,
     references: {
       model: UserType,
       key: "userType_ID",
