@@ -4,9 +4,9 @@ const { Customers } = require('../models');
 exports.createCustomer = async (req, res) => 
 {
   try {
-    const { name, email, phone, address, user_ID } = req.body;
+    const { name, phone, address, user_ID } = req.body;
     
-    const customer = await Customers.create({ name, email, phone, address, user_ID });
+    const customer = await Customers.create({ name, phone, address, user_ID });
 
     res.status(201).json(customer);
   } 
