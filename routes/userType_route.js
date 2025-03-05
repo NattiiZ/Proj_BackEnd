@@ -5,6 +5,7 @@ const UserType_Controller = require('../controllers/UserType_controller');
 
 router.post('/', UserType_Controller.createUserType);
 router.get('/', UserType_Controller.getUserTypes);
+router.get('/:id', UserType_Controller.getUserTypesbyId);
 router.put('/:id', UserType_Controller.updateUserType);
 router.delete('/:id', UserType_Controller.deleteUserType);
 
