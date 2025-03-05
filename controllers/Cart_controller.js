@@ -4,7 +4,7 @@ const { Cart } = require("../models");
 exports.createCart = async (req, res) => 
 {
   try {
-    const user_ID = req.body;
+    const { user_ID } = req.body;
     
     const cart = await Cart.create({ user_ID });
 
@@ -55,7 +55,7 @@ exports.updateCart = async (req, res) =>
     if (!cart)
       res.status(404).json({ error: "Cart not found" });
 
-    await cart.update({ data })
+    await cart.update(data)
 
     res.status(200).json(cart);
   } 

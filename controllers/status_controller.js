@@ -4,7 +4,7 @@ const { Status } = require("../models");
 exports.createStatus = async (req, res) => 
 {
   try {
-    const statusName = req.body;
+    const { statusName } = req.body;
     const status = await Status.create({ statusName });
     
     res.status(201).json(status);

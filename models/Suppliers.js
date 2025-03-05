@@ -25,9 +25,9 @@ const Suppliers = DB.define("Suppliers",
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
-      is: /^[0-9]{9}$/i
+      is: /^[0-9]{10}$/
     }
-  },
+  }
 });
 
 

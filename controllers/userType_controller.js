@@ -4,7 +4,7 @@ const { UserType } = require("../models");
 exports.createUserType = async (req, res) => 
 {
   try {
-    const role = req.body;
+    const { role } = req.body;
     const userType = await UserType.create({ role });
     
     res.status(201).json(userType);
