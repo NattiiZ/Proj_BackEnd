@@ -9,10 +9,10 @@ const Users = DB.define("Users",
   user_ID: {
     type: DataTypes.INTEGER,
     autoincrement: true,
-    get() {
-      const value = this.getDataValue('user_ID');
-      return value ? `U${String(value).padStart(3, '0')}` : value;
-    },
+    // get() {
+    //   const value = this.getDataValue('user_ID');
+    //   return value ? `U${String(value).padStart(3, '0')}` : value;
+    // },
     primaryKey: true,
   },
   username: {

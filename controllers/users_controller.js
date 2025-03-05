@@ -1,11 +1,11 @@
-const { Users, UserType } = require("../models");
+const { Users } = require("../models");
 
 
 exports.createUser = async (req, res) => 
 {
   try {
     const { username, password, email, userType_ID } = req.body;
-
+    
     const user = await Users.create({ username, password, email, userType_ID });
 
     res.status(201).json(user);
@@ -18,7 +18,7 @@ exports.createUser = async (req, res) =>
 exports.getUsers = async (req, res) => 
 {
   try {
-    const users = await Users.findAll({ include: [UserType] });
+    const users = await Users.findAll();
     
     res.status(200).json(users);
   } 
