@@ -4,6 +4,8 @@ const DB = require('../config/database');
 const Users = require('./Users');
 
 
+
+
 const Cart = DB.define("Cart", 
 {
   cart_ID: {
@@ -20,6 +22,8 @@ const Cart = DB.define("Cart",
     },
   }
 });
+
+
 
 
 module.exports = Cart;

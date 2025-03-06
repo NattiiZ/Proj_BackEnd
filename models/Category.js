@@ -3,6 +3,8 @@ const DataTypes = require('sequelize');
 const DB = require('../config/database');
 
 
+
+
 const Category = DB.define("Category", 
 {
   category_ID: {
@@ -20,6 +22,8 @@ const Category = DB.define("Category",
     allowNull: false
   }
 });
+
+
 
 
 module.exports = Category;

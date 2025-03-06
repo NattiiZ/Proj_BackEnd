@@ -3,6 +3,8 @@ const DataTypes = require('sequelize');
 const DB = require('../config/database');
 
 
+
+
 const Suppliers = DB.define("Suppliers", 
 {
   supplier_ID: {
@@ -29,6 +31,8 @@ const Suppliers = DB.define("Suppliers",
     }
   }
 });
+
+
 
 
 module.exports = Suppliers;

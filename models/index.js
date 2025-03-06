@@ -15,6 +15,7 @@ const OrderDetails = require('./OrderDetails');
 
 
 
+
 // ================== Relationships ==================
 
 Customers.hasMany(Orders, { foreignKey: "customer_ID" });

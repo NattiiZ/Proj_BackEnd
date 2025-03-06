@@ -6,6 +6,8 @@ const Category = require('./Category');
 const Suppliers = require('./Suppliers');
 
 
+
+
 const Products = DB.define("Products", 
 {
   product_ID: {
@@ -62,6 +64,8 @@ const Products = DB.define("Products",
     allowNull: false
   }
 });
+
+
 
 
 module.exports = Products;

@@ -3,6 +3,8 @@ const DataTypes = require('sequelize');
 const DB = require('../config/database');
 
 
+
+
 const Status = DB.define("Status", 
 {
   status_ID: {
@@ -15,6 +17,8 @@ const Status = DB.define("Status",
     allowNull: false,
   }
 });
+
+
 
 
 module.exports = Status;

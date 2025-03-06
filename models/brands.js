@@ -3,6 +3,8 @@ const DataTypes = require('sequelize');
 const DB = require('../config/database');
 
 
+
+
 const Brands = DB.define("Brands", 
 {
   brand_ID: {
@@ -15,6 +17,8 @@ const Brands = DB.define("Brands",
     allowNull: false,
   },
 });
+
+
 
 
 module.exports = Brands;

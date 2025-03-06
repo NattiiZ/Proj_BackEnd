@@ -5,6 +5,8 @@ const Cart = require('./Cart');
 const Products = require('./Products');
 
 
+
+
 const CartItems = DB.define("CartItems",
 {
   cartItem_ID: {
@@ -34,6 +36,8 @@ const CartItems = DB.define("CartItems",
     defaultValue: 1,
   },
 });
+
+
 
 
 module.exports = CartItems;

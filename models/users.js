@@ -4,6 +4,8 @@ const DB = require('../config/database');
 const UserType = require('./UserType');
 
 
+
+
 const Users = DB.define("Users", 
 {
   user_ID: {
@@ -46,6 +48,8 @@ const Users = DB.define("Users",
     },
   },
 });
+
+
 
 
 module.exports = Users;

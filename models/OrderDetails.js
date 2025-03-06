@@ -5,6 +5,8 @@ const Orders = require('./Orders');
 const Products = require('./Products');
 
 
+
+
 const OrderDetails = DB.define("OrderDetails", 
 {
   orderDetail_ID: {
@@ -41,6 +43,8 @@ const OrderDetails = DB.define("OrderDetails",
     allowNull: false,
   },
 });
+
+
 
 
 module.exports = OrderDetails;

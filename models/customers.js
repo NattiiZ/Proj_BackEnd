@@ -4,6 +4,8 @@ const DB = require('../config/database');
 const Users = require('./Users');
 
 
+
+
 const Customers = DB.define("Customers", 
 {
   customer_ID: {
@@ -40,6 +42,8 @@ const Customers = DB.define("Customers",
     }
   },
 });
+
+
 
 
 module.exports = Customers;
