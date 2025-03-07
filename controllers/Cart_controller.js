@@ -6,6 +6,7 @@ const { Cart } = require("../models");
 exports.createCart = async (req, res) => 
 {
   try {
+    
     const { user_ID } = req.body;
     
     const cart = await Cart.create({ user_ID });

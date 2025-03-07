@@ -29,22 +29,25 @@ exports.getCartItems = async (req, res) =>
   }
 };
 
-exports.getCartItemById = async (req, res) => 
-{
+exports.getCartItemById = async (req, res) => {
   try {
-    const { id } = req.params;
+    const cartId = req.params.id;
+    console.log(cartId);
+    
+    const cartItems = await CartItems.findAll({
+      where: { cart_ID: cartId },
+      include: [Cart, Products]
+    });
 
-    const cartItem = await Cart.findByPk(id);
+    // if (cartItems.length === 0)
+      // return res.status(404).json({ error: "No items found in cart" });
 
-    if (!cartItem)
-      return res.status(404).json({ error: "Cart item not found" });
-
-    res.status(200).json(cartItem);
-  } 
-  catch (error) {
+    res.status(200).json(cartItems);
+  } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 exports.updateCartItem = async (req, res) => 
 {
@@ -52,14 +55,17 @@ exports.updateCartItem = async (req, res) =>
     const { id } = req.params;
     const items = req.body;
 
-    const cartItem = await CartItems.findByPk(id);
+    const cartItem = await CartItems.findOne({ 
+      where: { cart_ID: id },
+      include: [Cart, Products] 
+    });
 
     if (!cartItem) 
-      res.status(404).json({ error: "Cart item not found" });
+      return res.status(404).json({ error: "Cart item not found" });
       
-      await cartItem.update(items);
+    await cartItem.update(items);
 
-      res.status(200).json(cartItem);
+    res.status(200).json(cartItem);
   } 
   catch (error) {
     res.status(400).json({ error: error.message });

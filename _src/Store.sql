@@ -15,10 +15,12 @@
 
 
 -- Dumping database structure for Store
+DROP DATABASE IF EXISTS "Store";
 CREATE DATABASE IF NOT EXISTS "Store";
 ;
 
 -- Dumping structure for table Store.Brands
+DROP TABLE IF EXISTS "Brands";
 CREATE TABLE IF NOT EXISTS "Brands" (
     "brand_ID" INTEGER PRIMARY KEY, 
     "name" VARCHAR(255) NOT NULL, 
@@ -70,28 +72,30 @@ INSERT INTO "Brands" ("brand_ID", "name", "createdAt", "updatedAt") VALUES
 /*!40000 ALTER TABLE "Brands" ENABLE KEYS */;
 
 -- Dumping structure for table Store.CartItems
+DROP TABLE IF EXISTS "CartItems";
 CREATE TABLE IF NOT EXISTS `CartItems` (`cartItem_ID` INTEGER PRIMARY KEY AUTOINCREMENT, `cart_ID` INTEGER NOT NULL REFERENCES `Carts` (`cart_ID`) ON DELETE CASCADE ON UPDATE CASCADE, `product_ID` INTEGER NOT NULL REFERENCES `Products` (`product_ID`) ON DELETE NO ACTION ON UPDATE CASCADE, `quantity` INTEGER NOT NULL DEFAULT 1, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 
 -- Dumping data for table Store.CartItems: 2 rows
 DELETE FROM "CartItems";
 /*!40000 ALTER TABLE "CartItems" DISABLE KEYS */;
 INSERT INTO "CartItems" ("cartItem_ID", "cart_ID", "product_ID", "quantity", "createdAt", "updatedAt") VALUES
-	(1, 1, 2, 1, '2025-03-05 07:13:38.436 +00:00', '2025-03-05 07:13:38.436 +00:00'),
-	(2, 2, 1, 2, '2025-03-05 07:13:38.436 +00:00', '2025-03-05 07:13:38.436 +00:00');
+	(40, 10, 1, 2, '2025-03-07 05:16:24.725 +00:00', '2025-03-07 05:16:42.808 +00:00'),
+	(41, 10, 2, 1, '2025-03-07 05:16:34.605 +00:00', '2025-03-07 05:16:34.605 +00:00');
 /*!40000 ALTER TABLE "CartItems" ENABLE KEYS */;
 
 -- Dumping structure for table Store.Carts
+DROP TABLE IF EXISTS "Carts";
 CREATE TABLE IF NOT EXISTS `Carts` (`cart_ID` INTEGER PRIMARY KEY AUTOINCREMENT, `user_ID` INTEGER NOT NULL REFERENCES `Users` (`user_ID`) ON DELETE CASCADE ON UPDATE CASCADE, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 
--- Dumping data for table Store.Carts: 2 rows
+-- Dumping data for table Store.Carts: 1 rows
 DELETE FROM "Carts";
 /*!40000 ALTER TABLE "Carts" DISABLE KEYS */;
 INSERT INTO "Carts" ("cart_ID", "user_ID", "createdAt", "updatedAt") VALUES
-	(1, 1, '2025-03-05 07:13:38.436 +00:00', '2025-03-05 07:13:38.436 +00:00'),
-	(2, 2, '2025-03-05 07:13:38.436 +00:00', '2025-03-05 07:13:38.436 +00:00');
+	(10, 2, '2025-03-07 00:51:53.956 +00:00', '2025-03-07 00:51:53.956 +00:00');
 /*!40000 ALTER TABLE "Carts" ENABLE KEYS */;
 
 -- Dumping structure for table Store.Categories
+DROP TABLE IF EXISTS "Categories";
 CREATE TABLE IF NOT EXISTS `Categories` (`category_ID` INTEGER PRIMARY KEY, `name` VARCHAR(255) NOT NULL, `description` VARCHAR(255) NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 
 -- Dumping data for table Store.Categories: 9 rows
@@ -110,6 +114,7 @@ INSERT INTO "Categories" ("category_ID", "name", "description", "createdAt", "up
 /*!40000 ALTER TABLE "Categories" ENABLE KEYS */;
 
 -- Dumping structure for table Store.Customers
+DROP TABLE IF EXISTS "Customers";
 CREATE TABLE IF NOT EXISTS `Customers` (`customer_ID` INTEGER PRIMARY KEY, `name` VARCHAR(255) NOT NULL, `phone` VARCHAR(255) NOT NULL, `address` VARCHAR(255) NOT NULL, `user_ID` INTEGER NOT NULL REFERENCES `Users` (`user_ID`) ON DELETE CASCADE ON UPDATE CASCADE, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 
 -- Dumping data for table Store.Customers: 5 rows
@@ -124,6 +129,7 @@ INSERT INTO "Customers" ("customer_ID", "name", "phone", "address", "user_ID", "
 /*!40000 ALTER TABLE "Customers" ENABLE KEYS */;
 
 -- Dumping structure for table Store.OrderDetails
+DROP TABLE IF EXISTS "OrderDetails";
 CREATE TABLE IF NOT EXISTS `OrderDetails` (`orderDetail_ID` INTEGER PRIMARY KEY, `order_ID` INTEGER NOT NULL REFERENCES `Orders` (`order_ID`) ON DELETE CASCADE ON UPDATE CASCADE, `product_ID` INTEGER NOT NULL REFERENCES `Products` (`product_ID`) ON DELETE NO ACTION ON UPDATE CASCADE, `quantity` INTEGER NOT NULL, `unitPrice` FLOAT NOT NULL, `subtotal` FLOAT NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 
 -- Dumping data for table Store.OrderDetails: 3 rows
@@ -136,6 +142,7 @@ INSERT INTO "OrderDetails" ("orderDetail_ID", "order_ID", "product_ID", "quantit
 /*!40000 ALTER TABLE "OrderDetails" ENABLE KEYS */;
 
 -- Dumping structure for table Store.Orders
+DROP TABLE IF EXISTS "Orders";
 CREATE TABLE IF NOT EXISTS `Orders` (`order_ID` INTEGER PRIMARY KEY, `customer_ID` INTEGER NOT NULL REFERENCES `Customers` (`customer_ID`) ON DELETE CASCADE ON UPDATE CASCADE, `orderDate` DATETIME, `totalAmount` FLOAT NOT NULL, `status_ID` INTEGER NOT NULL REFERENCES `Statuses` (`status_ID`) ON DELETE NO ACTION ON UPDATE CASCADE, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 
 -- Dumping data for table Store.Orders: 2 rows
@@ -147,6 +154,7 @@ INSERT INTO "Orders" ("order_ID", "customer_ID", "orderDate", "totalAmount", "st
 /*!40000 ALTER TABLE "Orders" ENABLE KEYS */;
 
 -- Dumping structure for table Store.Products
+DROP TABLE IF EXISTS "Products";
 CREATE TABLE IF NOT EXISTS "Products" (`product_ID` INTEGER PRIMARY KEY, `name` VARCHAR(255) NOT NULL, `brand_ID` INTEGER NOT NULL REFERENCES `Brands` (`brand_ID`) ON DELETE NO ACTION ON UPDATE CASCADE, `category_ID` INTEGER NOT NULL REFERENCES `Categories` (`category_ID`) ON DELETE NO ACTION ON UPDATE CASCADE, `unitPrice` FLOAT NOT NULL, `stockQty` INTEGER NOT NULL, `supplier_ID` INTEGER NOT NULL REFERENCES `Suppliers` (`supplier_ID`) ON DELETE NO ACTION ON UPDATE CASCADE, `img_url` VARCHAR(255) NOT NULL, "detail" VARCHAR(255) NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 
 -- Dumping data for table Store.Products: 88 rows
@@ -244,6 +252,7 @@ INSERT INTO "Products" ("product_ID", "name", "brand_ID", "category_ID", "unitPr
 /*!40000 ALTER TABLE "Products" ENABLE KEYS */;
 
 -- Dumping structure for table Store.Statuses
+DROP TABLE IF EXISTS "Statuses";
 CREATE TABLE IF NOT EXISTS `Statuses` (`status_ID` INTEGER PRIMARY KEY, `statusName` VARCHAR(255) NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 
 -- Dumping data for table Store.Statuses: 3 rows
@@ -256,6 +265,7 @@ INSERT INTO "Statuses" ("status_ID", "statusName", "createdAt", "updatedAt") VAL
 /*!40000 ALTER TABLE "Statuses" ENABLE KEYS */;
 
 -- Dumping structure for table Store.Suppliers
+DROP TABLE IF EXISTS "Suppliers";
 CREATE TABLE IF NOT EXISTS `Suppliers` (`supplier_ID` INTEGER PRIMARY KEY, `name` VARCHAR(255) NOT NULL, `email` VARCHAR(255) NOT NULL, `phone` VARCHAR(255) NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 
 -- Dumping data for table Store.Suppliers: 2 rows
@@ -267,6 +277,7 @@ INSERT INTO "Suppliers" ("supplier_ID", "name", "email", "phone", "createdAt", "
 /*!40000 ALTER TABLE "Suppliers" ENABLE KEYS */;
 
 -- Dumping structure for table Store.Users
+DROP TABLE IF EXISTS "Users";
 CREATE TABLE IF NOT EXISTS `Users` (`user_ID` INTEGER PRIMARY KEY, `username` VARCHAR(255) NOT NULL, `password` VARCHAR(255) NOT NULL, `email` VARCHAR(255) NOT NULL, `joinDate` DATETIME, `userType_ID` INTEGER NOT NULL REFERENCES `UserTypes` (`userType_ID`) ON DELETE NO ACTION ON UPDATE CASCADE, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 
 -- Dumping data for table Store.Users: 6 rows
@@ -282,6 +293,7 @@ INSERT INTO "Users" ("user_ID", "username", "password", "email", "joinDate", "us
 /*!40000 ALTER TABLE "Users" ENABLE KEYS */;
 
 -- Dumping structure for table Store.UserTypes
+DROP TABLE IF EXISTS "UserTypes";
 CREATE TABLE IF NOT EXISTS `UserTypes` (`userType_ID` INTEGER PRIMARY KEY, `role` VARCHAR(255) NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 
 -- Dumping data for table Store.UserTypes: 2 rows
