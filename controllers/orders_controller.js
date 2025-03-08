@@ -1,3 +1,4 @@
+const { or } = require("sequelize");
 const { Orders } = require("../models");
 
 
@@ -33,7 +34,7 @@ exports.getOrderById = async (req, res) =>
   try {
     const { id } = req.params;
 
-    const order = await Orders.findByPk(id);
+    const order = await Orders.findAll({ where: { customer_ID: id } });
 
     if (!order)
       return res.status(404).json({ error: "Order not found" });
