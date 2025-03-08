@@ -32,7 +32,6 @@ exports.getCartItems = async (req, res) =>
 exports.getCartItemById = async (req, res) => {
   try {
     const cartId = req.params.id;
-    console.log(cartId);
     
     const cartItems = await CartItems.findAll({
       where: { cart_ID: cartId },
@@ -72,16 +71,20 @@ exports.updateCartItem = async (req, res) =>
   }
 };
 
-exports.deleteCartItem = async (req, res) => 
+exports.deleteItem = async (req, res) => 
 {
   try {
-    const { id } = req.params;
+    const { cartId, item } = req.body;
 
-    const cartItem = await CartItems.findByPk(id);
+
+    if (!cartId || !item)
+      return res.status(400).json({ error: "Missing userId or productId" });
+
+    const cartItem = await CartItems.findOne({ where: { cart_ID: cartId, product_ID: item } });
 
     if (!cartItem)
-      res.status(404).json({ error: "Cart item not found" });
-
+      return res.status(404).json({ error: "Cart item not found" });
+    
     await cartItem.destroy();
 
     res.status(204).json();
@@ -90,3 +93,23 @@ exports.deleteCartItem = async (req, res) =>
     res.status(400).json({ error: error.message });
   }
 };
+
+exports.deleteAll = async (req, res) =>
+{
+  try {
+    const { cartId, productId, quantity } = req.body;
+
+    const item = await CartItem.findOne({ where: { cart_ID: cartId, product_ID: productId } });
+
+    if (!item) 
+      return res.status(404).json({ success: false, message: 'ไม่พบสินค้าในตะกร้า' });
+
+    await item.update({ quantity: quantity });
+
+    res.json({ success: true, message: 'อัปเดตจำนวนสินค้าสำเร็จ' });
+  } 
+  catch (error) {
+    console.error('Error updating quantity:', error);
+    res.status(500).json({ success: false, message: 'เกิดข้อผิดพลาดภายในระบบ' });
+}
+}
