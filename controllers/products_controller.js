@@ -3,8 +3,7 @@ const { Products } = require("../models");
 
 
 
-exports.createProduct = async (req, res) => 
-{
+exports.createProduct = async (req, res) => {
   try {
     const {
       name,
@@ -16,6 +15,7 @@ exports.createProduct = async (req, res) =>
       img_url,
       detail,
     } = req.body;
+
     const product = await Products.create({
       name,
       brand_ID,
@@ -30,24 +30,22 @@ exports.createProduct = async (req, res) =>
     res.status(201).json(product);
   } 
   catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: "Failed to create product. Please try again." });
   }
 };
 
-exports.getProducts = async (req, res) => 
-{
+exports.getProducts = async (req, res) => {
   try {
     const products = await Products.findAll();
 
     res.status(200).json(products);
   } 
   catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: "Failed to fetch products. Please try again." });
   }
 };
 
-exports.getProductById = async (req, res) => 
-{
+exports.getProductById = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -59,12 +57,11 @@ exports.getProductById = async (req, res) =>
     res.status(200).json(product);
   } 
   catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: "An error occurred while fetching the product." });
   }
 };
 
-exports.updateProduct = async (req, res) => 
-{
+exports.updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const data = req.body;
@@ -79,25 +76,24 @@ exports.updateProduct = async (req, res) =>
     res.status(200).json(product);
   } 
   catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: "Failed to update product. Please try again." });
   }
 };
 
-exports.deleteProduct = async (req, res) => 
-  {
-    try {
-      const { id } = req.params;
-      
-      const product = await Products.findByPk(id);
-      
-      if (!product)
-        res.status(404).json({ error: "Product not found" });
-      
-      await product.destroy();
-  
-      res.status(204).json();        
-    } 
-    catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  };
+exports.deleteProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const product = await Products.findByPk(id);
+    
+    if (!product)
+      return res.status(404).json({ error: "Product not found" });
+
+    await product.destroy();
+
+    res.status(204).json();        
+  } 
+  catch (error) {
+    res.status(400).json({ error: "Failed to delete product. Please try again." });
+  }
+};

@@ -3,8 +3,7 @@ const { CartItems, Cart, Products } = require("../models");
 
 
 
-exports.addCartItem = async (req, res) => 
-{
+exports.addCartItem = async (req, res) => {
   try {
     const { cart_ID, product_ID, quantity } = req.body;
     
@@ -13,19 +12,18 @@ exports.addCartItem = async (req, res) =>
     res.status(201).json(cartItem);
   } 
   catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: "Failed to add item to cart. Please try again." });
   }
 };
 
-exports.getCartItems = async (req, res) => 
-{
+exports.getCartItems = async (req, res) => {
   try {
     const cartItems = await CartItems.findAll({ include: [Cart, Products] });
 
     res.status(200).json(cartItems);
   } 
   catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: "Failed to fetch cart items. Please try again." });
   }
 };
 
@@ -39,17 +37,15 @@ exports.getCartItemById = async (req, res) => {
     });
 
     if (cartItems.length === 0)
-      return res.status(404).json({ error: "No items found in cart" });
+      return res.status(404).json({ error: "No items found in this cart" });
 
     res.status(200).json(cartItems);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: "An error occurred while fetching cart items." });
   }
 };
 
-
-exports.updateCartItem = async (req, res) => 
-{
+exports.updateCartItem = async (req, res) => {
   try {
     const { id } = req.params;
     const items = req.body;
@@ -67,21 +63,16 @@ exports.updateCartItem = async (req, res) =>
     res.status(200).json(cartItem);
   } 
   catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: "Failed to update cart item. Please try again." });
   }
 };
 
-exports.deleteItem = async (req, res) => 
-{
+exports.deleteItem = async (req, res) => {
   try {
     const { id, item } = req.query;
 
-
-    console.log(id, item);
-    
-
     if (!id || !item)
-      return res.status(400).json({ error: "Missing userId or productId" });
+      return res.status(400).json({ error: "Missing cart ID or product ID" });
 
     const cartItem = await CartItems.findOne({ where: { cart_ID: id, product_ID: item } });
 
@@ -93,6 +84,6 @@ exports.deleteItem = async (req, res) =>
     res.status(204).json();
   } 
   catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: "Failed to delete cart item. Please try again." });
   }
 };

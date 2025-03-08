@@ -11,10 +11,6 @@ const Customers = DB.define("Customers",
   customer_ID: {
     type: DataTypes.INTEGER,
     autoincrement: true,
-    // get() {
-    //   const value = this.getDataValue('customer_ID');
-    //   return value ? `C-${String(value).padStart(4, '0')}` : value;
-    // },
     primaryKey: true,
     
   },

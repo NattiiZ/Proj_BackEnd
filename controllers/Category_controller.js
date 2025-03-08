@@ -3,8 +3,7 @@ const { Category } = require("../models");
 
 
 
-exports.createCategory = async (req, res) => 
-{
+exports.createCategory = async (req, res) => {
   try {
     const { name, description } = req.body;
 
@@ -13,24 +12,22 @@ exports.createCategory = async (req, res) =>
     res.status(201).json(category);
   } 
   catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: "Failed to create category. Please try again." });
   }
 };
 
-exports.getCategories = async (req, res) => 
-{
+exports.getCategories = async (req, res) => {
   try {
     const categories = await Category.findAll();
 
     res.status(200).json(categories);
   } 
   catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: "Failed to fetch categories. Please try again." });
   }
 };
 
-exports.getCategoryById = async (req, res) => 
-{
+exports.getCategoryById = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -42,12 +39,11 @@ exports.getCategoryById = async (req, res) =>
     res.status(200).json(category);
   } 
   catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: "An error occurred while fetching the category." });
   }
 };
 
-exports.updateCategory = async (req, res) => 
-{
+exports.updateCategory = async (req, res) => {
   try {
     const { id } = req.params;
     const data = req.body;
@@ -55,32 +51,31 @@ exports.updateCategory = async (req, res) =>
     const category = await Category.findByPk(id);
 
     if (!category)
-      res.status(404).json({ error: "Category not found" });
+      return res.status(404).json({ error: "Category not found" });
       
     await category.update(data);
 
     res.status(200).json(category);
   } 
   catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: "Failed to update category. Please try again." });
   }
 };
 
-exports.deleteCategory = async (req, res) => 
-{
+exports.deleteCategory = async (req, res) => {
   try {
     const { id } = req.params;
 
     const category = await Category.findByPk(id);
 
     if (!category)
-      res.status(404).json({ error: "Category not found" });
+      return res.status(404).json({ error: "Category not found" });
 
     await category.destroy();
 
     res.status(204).json();
   } 
   catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: "Failed to delete category. Please try again." });
   }
 };

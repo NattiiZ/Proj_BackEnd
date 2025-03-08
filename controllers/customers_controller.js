@@ -3,8 +3,7 @@ const { Customers } = require('../models');
 
 
 
-exports.createCustomer = async (req, res) => 
-{
+exports.createCustomer = async (req, res) => {
   try {
     const { name, phone, address, user_ID } = req.body;
     
@@ -13,24 +12,22 @@ exports.createCustomer = async (req, res) =>
     res.status(201).json(customer);
   } 
   catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: "Failed to create customer. Please try again." });
   }
 };
 
-exports.getCustomers = async (req, res) => 
-{
+exports.getCustomers = async (req, res) => {
   try {
     const customers = await Customers.findAll();
 
     res.status(200).json(customers);
   } 
   catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: "Failed to fetch customers. Please try again." });
   }
 };
 
-exports.getCustomerById = async (req, res) => 
-{
+exports.getCustomerById = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -42,12 +39,11 @@ exports.getCustomerById = async (req, res) =>
     res.status(200).json(customer);
   } 
   catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: "An error occurred while fetching the customer." });
   }
 };
 
-exports.updateCustomer = async (req, res) => 
-{
+exports.updateCustomer = async (req, res) => {
   try {
     const { id } = req.params;
     const data = req.body;
@@ -55,32 +51,31 @@ exports.updateCustomer = async (req, res) =>
     const customer = await Customers.findByPk(id);
 
     if (!customer)
-      res.status(404).json({ error: 'Customer not found' });
+      return res.status(404).json({ error: "Customer not found" });
       
     await customer.update(data);
     
     res.status(200).json(customer);
   } 
   catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: "Failed to update customer. Please try again." });
   }
 };
 
-exports.deleteCustomer = async (req, res) => 
-{
+exports.deleteCustomer = async (req, res) => {
   try {
     const { id } = req.params;
 
     const customer = await Customers.findByPk(id);
     
     if (!customer)
-      res.status(404).json({ error: 'Customer not found' });
+      return res.status(404).json({ error: "Customer not found" });
 
     await customer.destroy();
   
     res.status(204).json();
   } 
   catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: "Failed to delete customer. Please try again." });
   }
 };
