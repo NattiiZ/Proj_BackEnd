@@ -38,8 +38,8 @@ exports.getCartItemById = async (req, res) => {
       include: [Cart, Products]
     });
 
-    // if (cartItems.length === 0)
-      // return res.status(404).json({ error: "No items found in cart" });
+    if (cartItems.length === 0)
+      return res.status(404).json({ error: "No items found in cart" });
 
     res.status(200).json(cartItems);
   } catch (error) {
