@@ -12,7 +12,7 @@ exports.createStatus = async (req, res) => {
     res.status(201).json(status);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to create status. Please try again." });
+    res.status(400).json({ error: "Failed to create status." });
   }
 };
 
@@ -23,7 +23,7 @@ exports.getStatuses = async (req, res) => {
     res.status(200).json(statuses);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to fetch statuses. Please try again." });
+    res.status(400).json({ error: "Failed to fetch statuses." });
   }
 };
 
@@ -58,7 +58,7 @@ exports.updateStatus = async (req, res) => {
     res.status(200).json(status);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to update status. Please try again." });
+    res.status(400).json({ error: "Failed to update status." });
   }
 };
 
@@ -75,6 +75,6 @@ exports.deleteStatus = async (req, res) => {
     res.status(204).json();
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to delete status. Please try again." });
+    res.status(400).json({ error: "Failed to delete status." });
   }
 };

@@ -18,7 +18,7 @@ exports.createOrderDetail = async (req, res) => {
     res.status(201).json(orderDetail);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to create order detail. Please try again." });
+    res.status(400).json({ error: "Failed to create order detail." });
   }
 };
 
@@ -29,7 +29,7 @@ exports.getOrderDetails = async (req, res) => {
     res.status(200).json(orderDetails);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to fetch order details. Please try again." });
+    res.status(400).json({ error: "Failed to fetch order details." });
   }
 };
 
@@ -63,7 +63,7 @@ exports.updateOrderDetail = async (req, res) => {
     res.status(200).json(orderDetail);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to update order detail. Please try again." });
+    res.status(400).json({ error: "Failed to update order detail." });
   }
 };
 
@@ -80,6 +80,6 @@ exports.deleteOrderDetail = async (req, res) => {
     res.status(204).json();
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to delete order detail. Please try again." });
+    res.status(400).json({ error: "Failed to delete order detail." });
   }
 };

@@ -16,7 +16,7 @@ exports.createUserType = async (req, res) => {
     res.status(201).json(userType);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to create user type. Please try again." });
+    res.status(400).json({ error: "Failed to create user type." });
   }
 };
 
@@ -31,7 +31,7 @@ exports.getUserTypes = async (req, res) => {
     res.status(200).json(userTypes);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to retrieve user types. Please try again." });
+    res.status(400).json({ error: "Failed to retrieve user types." });
   }
 };
 
@@ -68,7 +68,7 @@ exports.updateUserType = async (req, res) => {
     res.status(200).json(userType);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to update user type. Please try again." });
+    res.status(400).json({ error: "Failed to update user type." });
   }
 };
 
@@ -87,6 +87,6 @@ exports.deleteUserType = async (req, res) => {
     res.status(204).json();
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to delete user type. Please try again." });
+    res.status(400).json({ error: "Failed to delete user type." });
   }
 };

@@ -12,7 +12,7 @@ exports.createOrder = async (req, res) => {
     res.status(201).json(order);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to create order. Please try again." });
+    res.status(400).json({ error: "Failed to create order." });
   }
 };
 
@@ -23,7 +23,7 @@ exports.getOrders = async (req, res) => {
     res.status(200).json(orders);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to fetch orders. Please try again." });
+    res.status(400).json({ error: "Failed to fetch orders." });
   }
 };
 
@@ -58,7 +58,7 @@ exports.updateOrder = async (req, res) => {
     res.status(200).json(order);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to update order. Please try again." });
+    res.status(400).json({ error: "Failed to update order." });
   }
 };
 
@@ -76,6 +76,6 @@ exports.deleteOrder = async (req, res) => {
     res.status(204).json();
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to delete order. Please try again." });
+    res.status(400).json({ error: "Failed to delete order." });
   }
 };

@@ -16,7 +16,7 @@ exports.createSupplier = async (req, res) => {
     res.status(201).json(supplier);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to create supplier. Please try again." });
+    res.status(400).json({ error: "Failed to create supplier." });
   }
 };
 
@@ -31,7 +31,7 @@ exports.getSuppliers = async (req, res) => {
     res.status(200).json(suppliers);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to retrieve suppliers. Please try again." });
+    res.status(400).json({ error: "Failed to retrieve suppliers." });
   }
 };
 
@@ -68,7 +68,7 @@ exports.updateSupplier = async (req, res) => {
     res.status(200).json(supplier);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to update supplier. Please try again." });
+    res.status(400).json({ error: "Failed to update supplier." });
   }
 };
 
@@ -87,6 +87,6 @@ exports.deleteSupplier = async (req, res) => {
     res.status(204).json();
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to delete supplier. Please try again." });
+    res.status(400).json({ error: "Failed to delete supplier." });
   }
 };

@@ -11,7 +11,7 @@ exports.createCart = async (req, res) => {
 
     res.status(201).json(cart);
   } catch (error) {
-    res.status(400).json({ error: "Failed to create cart. Please try again." });
+    res.status(400).json({ error: "Failed to create cart." });
   }
 };
 
@@ -21,7 +21,7 @@ exports.getCarts = async (req, res) => {
 
     res.status(200).json(carts);
   } catch (error) {
-    res.status(400).json({ error: "Failed to fetch carts. Please try again." });
+    res.status(400).json({ error: "Failed to fetch carts." });
   }
 };
 
@@ -37,7 +37,7 @@ exports.getCartById = async (req, res) => {
 
     res.status(200).json(cart);
   } catch (error) {
-    res.status(500).json({ error: "An error occurred. Please try again." });
+    res.status(500).json({ error: "An error occurred." });
   }
 };
 
@@ -56,7 +56,7 @@ exports.updateCart = async (req, res) => {
 
     res.status(200).json(cart);
   } catch (error) {
-    res.status(400).json({ error: "Failed to update cart. Please try again." });
+    res.status(400).json({ error: "Failed to update cart." });
   }
 };
 
@@ -74,6 +74,6 @@ exports.deleteCart = async (req, res) => {
 
     res.status(204).json();
   } catch (error) {
-    res.status(400).json({ error: "Failed to delete cart. Please try again." });
+    res.status(400).json({ error: "Failed to delete cart." });
   }
 };

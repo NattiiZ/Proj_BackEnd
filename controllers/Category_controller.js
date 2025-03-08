@@ -12,7 +12,7 @@ exports.createCategory = async (req, res) => {
     res.status(201).json(category);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to create category. Please try again." });
+    res.status(400).json({ error: "Failed to create category." });
   }
 };
 
@@ -23,7 +23,7 @@ exports.getCategories = async (req, res) => {
     res.status(200).json(categories);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to fetch categories. Please try again." });
+    res.status(400).json({ error: "Failed to fetch categories." });
   }
 };
 
@@ -58,7 +58,7 @@ exports.updateCategory = async (req, res) => {
     res.status(200).json(category);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to update category. Please try again." });
+    res.status(400).json({ error: "Failed to update category." });
   }
 };
 
@@ -76,6 +76,6 @@ exports.deleteCategory = async (req, res) => {
     res.status(204).json();
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to delete category. Please try again." });
+    res.status(400).json({ error: "Failed to delete category." });
   }
 };

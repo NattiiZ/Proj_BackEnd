@@ -16,7 +16,7 @@ exports.createUser = async (req, res) => {
     res.status(201).json(user);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to create user. Please try again." });
+    res.status(400).json({ error: "Failed to create user." });
   }
 };
 
@@ -31,7 +31,7 @@ exports.getUsers = async (req, res) => {
     res.status(200).json(users);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to retrieve users. Please try again." });
+    res.status(400).json({ error: "Failed to retrieve users." });
   }
 };
 
@@ -68,7 +68,7 @@ exports.updateUser = async (req, res) => {
     res.status(200).json(user);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to update user. Please try again." });
+    res.status(400).json({ error: "Failed to update user." });
   }
 };
 
@@ -87,6 +87,6 @@ exports.deleteUser = async (req, res) => {
     res.status(204).json();
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to delete user. Please try again." });
+    res.status(400).json({ error: "Failed to delete user." });
   }
 };

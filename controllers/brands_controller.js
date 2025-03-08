@@ -11,7 +11,7 @@ exports.createBrand = async (req, res) => {
 
     res.status(201).json(brand);
   } catch (error) {
-    res.status(400).json({ error: "Failed to create brand. Please try again." });
+    res.status(400).json({ error: "Failed to create brand." });
   }
 };
 
@@ -21,7 +21,7 @@ exports.getBrands = async (req, res) => {
 
     res.status(200).json(brands);
   } catch (error) {
-    res.status(400).json({ error: "Failed to fetch brands. Please try again." });
+    res.status(400).json({ error: "Failed to fetch brands." });
   }
 };
 
@@ -37,7 +37,7 @@ exports.getBrandById = async (req, res) => {
 
     res.status(200).json(brand);
   } catch (error) {
-    res.status(500).json({ error: "An error occurred. Please try again." });
+    res.status(500).json({ error: "An error occurred." });
   }
 };
 
@@ -56,7 +56,7 @@ exports.updateBrand = async (req, res) => {
 
     res.status(200).json(brand);
   } catch (error) {
-    res.status(400).json({ error: "Failed to update brand. Please try again." });
+    res.status(400).json({ error: "Failed to update brand." });
   }
 };
 
@@ -74,6 +74,6 @@ exports.deleteBrand = async (req, res) => {
 
     res.status(204).json();
   } catch (error) {
-    res.status(400).json({ error: "Failed to delete brand. Please try again." });
+    res.status(400).json({ error: "Failed to delete brand." });
   }
 };

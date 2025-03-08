@@ -12,7 +12,7 @@ exports.createCustomer = async (req, res) => {
     res.status(201).json(customer);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to create customer. Please try again." });
+    res.status(400).json({ error: "Failed to create customer." });
   }
 };
 
@@ -23,7 +23,7 @@ exports.getCustomers = async (req, res) => {
     res.status(200).json(customers);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to fetch customers. Please try again." });
+    res.status(400).json({ error: "Failed to fetch customers." });
   }
 };
 
@@ -58,7 +58,7 @@ exports.updateCustomer = async (req, res) => {
     res.status(200).json(customer);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to update customer. Please try again." });
+    res.status(400).json({ error: "Failed to update customer." });
   }
 };
 
@@ -76,6 +76,6 @@ exports.deleteCustomer = async (req, res) => {
     res.status(204).json();
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to delete customer. Please try again." });
+    res.status(400).json({ error: "Failed to delete customer." });
   }
 };

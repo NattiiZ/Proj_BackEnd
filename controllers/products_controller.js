@@ -30,7 +30,7 @@ exports.createProduct = async (req, res) => {
     res.status(201).json(product);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to create product. Please try again." });
+    res.status(400).json({ error: "Failed to create product." });
   }
 };
 
@@ -41,7 +41,7 @@ exports.getProducts = async (req, res) => {
     res.status(200).json(products);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to fetch products. Please try again." });
+    res.status(400).json({ error: "Failed to fetch products." });
   }
 };
 
@@ -76,7 +76,7 @@ exports.updateProduct = async (req, res) => {
     res.status(200).json(product);
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to update product. Please try again." });
+    res.status(400).json({ error: "Failed to update product." });
   }
 };
 
@@ -94,6 +94,6 @@ exports.deleteProduct = async (req, res) => {
     res.status(204).json();        
   } 
   catch (error) {
-    res.status(400).json({ error: "Failed to delete product. Please try again." });
+    res.status(400).json({ error: "Failed to delete product." });
   }
 };
