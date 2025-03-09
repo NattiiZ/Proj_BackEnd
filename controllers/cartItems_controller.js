@@ -9,6 +9,7 @@ exports.addCartItem = async (req, res) => {
     
     const cartItem = await CartItems.create({ cart_ID, product_ID, quantity });
 
+
     res.status(201).json(cartItem);
   } 
   catch (error) {
@@ -36,8 +37,8 @@ exports.getCartItemById = async (req, res) => {
       include: [Cart, Products]
     });
 
-    if (cartItems.length === 0)
-      return res.status(404).json({ error: "No items found in this cart" });
+    // if (cartItems.length === 0)
+    //   return res.status(404).json({ error: "No items found in this cart" });
 
     res.status(200).json(cartItems);
   } catch (error) {
@@ -47,11 +48,15 @@ exports.getCartItemById = async (req, res) => {
 
 exports.updateCartItem = async (req, res) => {
   try {
-    const { id } = req.params;
     const items = req.body;
 
+    console.log('========================================\n');
+    console.log(items);
+    console.log('========================================\n');
+    
+
     const cartItem = await CartItems.findOne({ 
-      where: { cart_ID: id },
+      where: { cart_ID: items.cartId },
       include: [Cart, Products] 
     });
 
@@ -69,12 +74,14 @@ exports.updateCartItem = async (req, res) => {
 
 exports.deleteItem = async (req, res) => {
   try {
-    const { id, item } = req.query;
+    const { id, item } = req.params;
 
-    if (!id || !item)
+    if (!id || !item) 
       return res.status(400).json({ error: "Missing cart ID or product ID" });
 
     const cartItem = await CartItems.findOne({ where: { cart_ID: id, product_ID: item } });
+    console.log(id, item);
+    
 
     if (!cartItem)
       return res.status(404).json({ error: "Cart item not found" });
@@ -84,6 +91,7 @@ exports.deleteItem = async (req, res) => {
     res.status(204).json();
   } 
   catch (error) {
+    console.error('Error in deleteItem:', error.message);
     res.status(400).json({ error: "Failed to delete cart item." });
   }
 };

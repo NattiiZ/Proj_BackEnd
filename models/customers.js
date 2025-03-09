@@ -32,6 +32,7 @@ const Customers = DB.define("Customers",
   user_ID: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    defaultValue: 2,
     references: {
       model: Users,
       key: "user_ID",

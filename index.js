@@ -45,6 +45,28 @@ app.use('/user-type', UserType_Route);
 
 DB.sync().then(() => 
 {
+  const { execSync } = require('child_process');
+
+  const clearPort = (port) => {
+      try {
+          const result = execSync(`netstat -ano | findstr :${port}`).toString();
+          const lines = result.trim().split('\n');
+          
+          lines.forEach(line => {
+              const parts = line.trim().split(/\s+/);
+              const pid = parts[parts.length - 1];
+          
+              execSync(`taskkill /PID ${pid} /F`);
+              console.log(`\x1b[32mSuccessfully killed process on port ${port} (PID: ${pid})\x1b[0m`);
+          });
+      } 
+      catch (error) {
+          console.error(`\x1b[31m[ERROR]\x1b[0m Failed to clear port ${port}`);
+      }
+  };
+
+  clearPort(port);
+
   console.log(`\x1b[32mDatabase has synced!\x1b[0m`);
   app.listen(port, () => console.log(`\x1b[44mServer running on http://localhost:${port}\x1b[0m`));
 });

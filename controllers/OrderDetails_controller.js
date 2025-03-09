@@ -7,13 +7,20 @@ exports.createOrderDetail = async (req, res) => {
   try {
     const { order_ID, product_ID, quantity, unitPrice, subtotal } = req.body;
 
+    console.log(order_ID);
+    console.log(product_ID);
+    console.log(quantity);
+    console.log(unitPrice);
+    console.log(subtotal);
+
+
     const orderDetail = await OrderDetails.create({
       order_ID,
       product_ID,
       quantity,
       unitPrice,
       subtotal,
-    });
+    });    
 
     res.status(201).json(orderDetail);
   } 
