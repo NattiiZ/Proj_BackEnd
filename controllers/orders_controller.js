@@ -33,9 +33,6 @@ exports.getOrderById = async (req, res) => {
 
     const order = await Orders.findAll({ where: { customer_ID: id } });
 
-    if (!order || order.length === 0)
-      return res.status(404).json({ error: "Order not found" });
-
     res.status(200).json(order);
   } 
   catch (error) {

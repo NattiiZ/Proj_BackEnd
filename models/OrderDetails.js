@@ -34,6 +34,9 @@ const OrderDetails = DB.define("OrderDetails",
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+
+
+  
   unitPrice: {
     type: DataTypes.FLOAT,
     allowNull: false,

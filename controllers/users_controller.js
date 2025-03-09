@@ -7,7 +7,7 @@ exports.createUser = async (req, res) => {
   try {
     const { username, password, email, userType_ID } = req.body;
 
-    if (!username || !password || !email || !userType_ID) {
+    if (!username || !password || !email) {
       return res.status(400).json({ error: "Username, password, email, and userType_ID are required" });
     }
 
@@ -24,9 +24,9 @@ exports.getUsers = async (req, res) => {
   try {
     const users = await Users.findAll();
 
-    if (users.length === 0) {
-      return res.status(404).json({ error: "No users found" });
-    }
+    // if (users.length === 0) {
+    //   return res.status(404).json({ error: "No users found" });
+    // }
 
     res.status(200).json(users);
   } 

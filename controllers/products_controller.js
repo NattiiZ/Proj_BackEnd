@@ -12,7 +12,7 @@ exports.createProduct = async (req, res) => {
       unitPrice,
       stockQty,
       supplier_ID,
-      img_url,
+      imgName,
       detail,
     } = req.body;
 
@@ -23,7 +23,7 @@ exports.createProduct = async (req, res) => {
       unitPrice,
       stockQty,
       supplier_ID,
-      img_url,
+      imgName,
       detail,
     });
 

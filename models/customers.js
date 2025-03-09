@@ -12,7 +12,6 @@ const Customers = DB.define("Customers",
     type: DataTypes.INTEGER,
     autoincrement: true,
     primaryKey: true,
-    
   },
   name: {
     type: DataTypes.STRING,

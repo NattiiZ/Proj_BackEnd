@@ -44,7 +44,7 @@ exports.getOrderDetailById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const orderDetail = await OrderDetails.findByPk(id);
+    const orderDetail = await OrderDetails.findAll({ where: { order_ID: id } });
 
     if (!orderDetail)
       return res.status(404).json({ error: "Order detail not found" });

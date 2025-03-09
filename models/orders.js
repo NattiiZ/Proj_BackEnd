@@ -2,7 +2,6 @@ const DataTypes = require('sequelize');
 
 const DB = require('../config/database');
 const Customers = require('./Customers');
-const Status = require('./Status');
 
 
 
@@ -11,7 +10,7 @@ const Orders = DB.define("Orders",
 {
   order_ID: {
     type: DataTypes.INTEGER,
-    autoincrement: true,
+    autoIncrement: true,
     primaryKey: true,
   },
   customer_ID: {
@@ -26,20 +25,12 @@ const Orders = DB.define("Orders",
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
     get() {
-      return new Date(this.getDataValue('orderDate')).toLocaleString("th-TH", { timeZone: "Asia/Bangkok" });
+      return new Date(this.getDataValue('orderDate')).toLocaleDateString("th-TH", { timeZone: "Asia/Bangkok" });
     },
   },
   totalAmount: {
     type: DataTypes.FLOAT,
     allowNull: false,
-  },
-  status_ID: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: Status,
-      key: "status_ID",
-    },
   },
 });
 
