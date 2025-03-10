@@ -17,7 +17,7 @@ const Category = DB.define("Category",
     type: DataTypes.STRING,
     allowNull: false,
   },
-  img_url: {
+  imgName: {
     type: DataTypes.STRING,
     allowNull: false
   },
