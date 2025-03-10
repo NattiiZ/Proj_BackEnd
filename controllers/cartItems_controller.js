@@ -47,22 +47,29 @@ exports.updateCartItem = async (req, res) => {
   try {
     const items = req.body;
 
-    const cartItem = await CartItems.findOne({ 
-      where: { cart_ID: items.cartId },
+    const cartItem = await CartItems.findOne({
+      where: { cart_ID: items.cartId, product_ID: items.productId },
       include: [Cart, Products] 
     });
 
-    if (!cartItem) 
+    console.log(items);
+
+    if (!cartItem) {
       return res.status(404).json({ error: "Cart item not found" });
-      
-    await cartItem.update(items);
+    }
+
+    cartItem.quantity = items.quantity;
+
+    await cartItem.save();
 
     res.status(200).json(cartItem);
   } 
   catch (error) {
+    console.error(error);
     res.status(400).json({ error: "Failed to update cart item." });
   }
 };
+
 
 exports.deleteItem = async (req, res) => {
   try {
