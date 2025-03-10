@@ -11,7 +11,6 @@ exports.createProduct = async (req, res) => {
       category_ID,
       unitPrice,
       stockQty,
-      supplier_ID,
       imgName,
       detail,
     } = req.body;
@@ -22,7 +21,6 @@ exports.createProduct = async (req, res) => {
       category_ID,
       unitPrice,
       stockQty,
-      supplier_ID,
       imgName,
       detail,
     });

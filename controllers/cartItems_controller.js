@@ -37,9 +37,6 @@ exports.getCartItemById = async (req, res) => {
       include: [Cart, Products]
     });
 
-    // if (cartItems.length === 0)
-    //   return res.status(404).json({ error: "No items found in this cart" });
-
     res.status(200).json(cartItems);
   } catch (error) {
     res.status(500).json({ error: "An error occurred while fetching cart items." });
@@ -49,11 +46,6 @@ exports.getCartItemById = async (req, res) => {
 exports.updateCartItem = async (req, res) => {
   try {
     const items = req.body;
-
-    console.log('========================================\n');
-    console.log(items);
-    console.log('========================================\n');
-    
 
     const cartItem = await CartItems.findOne({ 
       where: { cart_ID: items.cartId },

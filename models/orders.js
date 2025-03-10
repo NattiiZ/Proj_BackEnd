@@ -23,6 +23,7 @@ const Orders = DB.define("Orders",
   },
   orderDate: {
     type: DataTypes.DATE,
+    allowNull: true,
     defaultValue: DataTypes.NOW,
     get() {
       return new Date(this.getDataValue('orderDate')).toLocaleDateString("th-TH", { timeZone: "Asia/Bangkok" });
