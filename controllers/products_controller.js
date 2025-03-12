@@ -65,7 +65,7 @@ exports.updateProduct = async (req, res) => {
     const data = req.body;
 
     const product = await Products.findByPk(id);
-
+    
     if (!product)
       return res.status(404).json({ error: "Product not found" });
 

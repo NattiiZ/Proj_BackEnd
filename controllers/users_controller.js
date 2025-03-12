@@ -5,13 +5,13 @@ const { Users } = require("../models");
 
 exports.createUser = async (req, res) => {
   try {
-    const { username, password, email } = req.body;
+    const { username, password, email, userType } = req.body;
 
     if (!username || !password || !email) {
       return res.status(400).json({ error: "Username, password, email are required" });
     }
 
-    const user = await Users.create({ username, password, email });
+    const user = await Users.create({ username, password, email ,userType });
 
     res.status(201).json(user);
   } 
@@ -73,6 +73,11 @@ exports.deleteUser = async (req, res) => {
     const { id } = req.params;
 
     const user = await Users.findByPk(id);
+
+    console.log(id);
+    console.log(user);
+    
+    
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });

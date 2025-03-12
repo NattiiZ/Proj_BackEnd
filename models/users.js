@@ -27,11 +27,16 @@ const Users = DB.define("Users",
       isEmail: true
     },
   },
+  userType: {
+    type: DataTypes.INTEGER,
+    defaultValue: 3,
+    allowNull: false
+  },
   joinDate: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
     get() {
-      return new Date(this.getDataValue('joinDate')).toLocaleString("th-TH", { timeZone: "Asia/Bangkok" });
+      return new Date(this.getDataValue('joinDate')).toLocaleDateString("th-TH", { timeZone: "Asia/Bangkok" });
     },
   },
 });

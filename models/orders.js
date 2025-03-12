@@ -29,7 +29,7 @@ const Orders = DB.define("Orders",
       return new Date(this.getDataValue('orderDate')).toLocaleDateString("th-TH", { timeZone: "Asia/Bangkok" });
     },
   },
-  totalAmount: {
+  totalPrice: {
     type: DataTypes.FLOAT,
     allowNull: false,
   },

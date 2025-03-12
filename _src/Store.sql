@@ -143,12 +143,12 @@ INSERT INTO "OrderDetails" ("orderDetail_ID", "order_ID", "product_ID", "quantit
 
 -- Dumping structure for table Store.Orders
 DROP TABLE IF EXISTS "Orders";
-CREATE TABLE IF NOT EXISTS `Orders` (`order_ID` INTEGER PRIMARY KEY, `customer_ID` INTEGER NOT NULL REFERENCES `Customers` (`customer_ID`) ON DELETE CASCADE ON UPDATE CASCADE, `orderDate` DATETIME, `totalAmount` FLOAT NOT NULL, `status_ID` INTEGER NOT NULL REFERENCES `Statuses` (`status_ID`) ON DELETE NO ACTION ON UPDATE CASCADE, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
+CREATE TABLE IF NOT EXISTS `Orders` (`order_ID` INTEGER PRIMARY KEY, `customer_ID` INTEGER NOT NULL REFERENCES `Customers` (`customer_ID`) ON DELETE CASCADE ON UPDATE CASCADE, `orderDate` DATETIME, `totalPrice` FLOAT NOT NULL, `status_ID` INTEGER NOT NULL REFERENCES `Statuses` (`status_ID`) ON DELETE NO ACTION ON UPDATE CASCADE, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
 
 -- Dumping data for table Store.Orders: 2 rows
 DELETE FROM "Orders";
 /*!40000 ALTER TABLE "Orders" DISABLE KEYS */;
-INSERT INTO "Orders" ("order_ID", "customer_ID", "orderDate", "totalAmount", "status_ID", "createdAt", "updatedAt") VALUES
+INSERT INTO "Orders" ("order_ID", "customer_ID", "orderDate", "totalPrice", "status_ID", "createdAt", "updatedAt") VALUES
 	(1, 1, '2025-03-03 08:52:27.233 +00:00', 55000.0, 1, '2025-03-03 08:52:27.233 +00:00', '2025-03-03 08:52:27.233 +00:00'),
 	(2, 2, '2025-03-03 08:52:41.823 +00:00', 40000.0, 3, '2025-03-03 08:52:41.823 +00:00', '2025-03-03 08:53:19.306 +00:00');
 /*!40000 ALTER TABLE "Orders" ENABLE KEYS */;

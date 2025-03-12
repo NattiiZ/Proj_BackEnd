@@ -6,9 +6,9 @@ const { Orders } = require("../models");
 
 exports.createOrder = async (req, res) => {
   try {
-    const { customer_ID, totalAmount } = req.body;
+    const { customer_ID, totalPrice } = req.body;
 
-    const order = await Orders.create({ customer_ID, totalAmount });
+    const order = await Orders.create({ customer_ID, totalPrice });
 
     res.status(201).json(order);
   } 

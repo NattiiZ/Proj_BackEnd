@@ -20,7 +20,8 @@ const Products = DB.define("Products",
   },
   brand_ID: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
+    onDelete: null,
     references: {
       model: Brands,
       key: "brand_ID",
@@ -28,7 +29,8 @@ const Products = DB.define("Products",
   },
   category_ID: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
+    onDelete: null,
     references: {
       model: Category,
       key: "category_ID",

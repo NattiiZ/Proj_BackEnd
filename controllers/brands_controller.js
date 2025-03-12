@@ -7,6 +7,8 @@ exports.createBrand = async (req, res) => {
   try {
     const { name } = req.body;
 
+    console.log(name);
+    
     const brand = await Brands.create({ name });
 
     res.status(201).json(brand);
